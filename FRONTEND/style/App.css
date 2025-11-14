@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.rota{
+  background-color: aqua;
+  margin: 20px 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+nav{
+  margin: 0px 0px 20px 0px;
+}
