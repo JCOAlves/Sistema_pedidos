@@ -1,3 +1,5 @@
- exports.getMenus = (req, res) => {
+const menus = [];
+
+exports.getMenus = (req, res) => {
   res.json(menus);
 };

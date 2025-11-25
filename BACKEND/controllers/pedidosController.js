@@ -1,3 +1,5 @@
+let pedidos = [];
+
 exports.getPedidos = (req, res) => {
   res.json(pedidos);
 };
@@ -10,7 +12,7 @@ exports.createPedido = (req, res) => {
   };
 
   pedidos.push(novo);
-  res.json({ msg: "Pedido criado", novo });
+  res.status(201).json({ msg: "Pedido criado", novo });
 };
 
 exports.updatePedido = (req, res) => {
@@ -29,7 +31,10 @@ exports.updatePedido = (req, res) => {
 
 exports.deletePedido = (req, res) => {
   const id = Number(req.params.id);
+  const before = pedidos.length;
   pedidos = pedidos.filter(p => p.id !== id);
+  const removed = before !== pedidos.length;
 
-  res.json({ msg: "Pedido removido" });
+  if (!removed) return res.status(404).json({ error: "Pedido não encontrado" });
+  return res.json({ msg: "Pedido removido" });
 };
