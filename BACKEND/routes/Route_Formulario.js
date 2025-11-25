@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { getFormularios, createFormulario } = require("../controllers/formularioController");
 
-router.get("/", (req, res) => {
-  res.json({ msg: "Rota de formulário funcionando" });
-});
+router.get("/", getFormularios);
+router.post("/", createFormulario);
 
 module.exports = router;

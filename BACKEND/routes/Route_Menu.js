@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const { getMenus } = require("../controllers/menuController");
 
-router.get("/", (req, res) => {
-  res.json({ msg: "Rota de menu funcionando" });
-});
+router.get("/", getMenus);
 
 module.exports = router;

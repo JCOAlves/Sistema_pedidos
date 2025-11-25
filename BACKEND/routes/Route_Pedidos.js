@@ -1,8 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ msg: "Rota de menu funcionando" });
-});
+const {
+  getPedidos,
+  createPedido,
+  updatePedido,
+  deletePedido
+} = require("../controllers/pedidosController");
+
+router.get("/", getPedidos);
+router.post("/", createPedido);
+router.put("/:id", updatePedido);
+router.delete("/:id", deletePedido);
 
 module.exports = router;
