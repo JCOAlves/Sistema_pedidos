@@ -1,7 +1,7 @@
-import React from "react";
-
-function Menu(){
-    return <h1>Página do Menu</h1>
+export default function Menu() {
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold">Cardápio</h1>
+    </div>
+  );
 }
-
-export default Menu;

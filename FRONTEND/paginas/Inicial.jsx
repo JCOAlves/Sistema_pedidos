@@ -1,7 +1,7 @@
-import React from "react";
-
-function Inicial(){
-    return <h1>Página Inicial</h1>
+export default function Inicial() {
+  return (
+    <div className="p-6">
+      <h1 className="text-3xl font-bold"> </h1>
+    </div>
+  );
 }
-
-export default Inicial;
