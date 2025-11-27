@@ -10,7 +10,7 @@ export default function Header() {
         </h1>
 
         <nav className="flex gap-6 text-sm">
-          <Link to="/" className="hover:text-gray-300">Inicial</Link>
+          <Link to="/" className="hover:text-gray-300">Início</Link>
           <Link to="/formulario" className="hover:text-gray-300">Formulário</Link>
           <Link to="/menu" className="hover:text-gray-300">Menu</Link>
           <Link to="/pedidos" className="hover:text-gray-300">Pedidos</Link>
