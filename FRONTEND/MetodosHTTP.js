@@ -12,7 +12,7 @@ export async function GET(rota){
         }
 
     } catch (erro) {
-        console.error("Erro na busca de dados", erro)
+        console.error("Erro na busca de dados", erro);
         return `Erro na busca de dados: ${erro.message || erro}`;
     }
 };
@@ -25,12 +25,13 @@ export async function POST(rota, objeto) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: objetoJSON
-        })
+        });
         resposta = await resposta.json();
         console.log(objeto);
+        return resposta;
     }
-    catch {
-        console.error("Erro no envio de dados", erro)
+    catch (erro) {
+        console.error("Erro no envio de dados", erro);
         return `Erro no envio de dados: ${erro.message || erro}`;
     }
 };
@@ -43,12 +44,13 @@ export async function PUT(rotaEspecifica, objeto) {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: objetoJSON
-        })
+        });
         resposta = await resposta.json();
-        console.log(objeto);
+        console.log(resposta);
+        return resposta;
     }
-    catch{
-        console.error("Erro na atualização de dados", erro)
+    catch(erro){
+        console.error("Erro na atualização de dados", erro);
         return `Erro na atualização de dados: ${erro.message || erro}`;
     }
 };
@@ -59,12 +61,13 @@ export async function DELETE(rotaEspecifica) {
         let resposta = await fetch(rotaEspecifica, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
-        })
+        });
         resposta = await resposta.json();
-        console.log(objeto);
+        console.log(resposta);
+        return resposta;
     }
-    catch{
-        console.error("Erro na excluição de dados", erro)
+    catch(erro){
+        console.error("Erro na exclução de dados", erro);
         return `Erro na excluição de dados: ${erro.message || erro}`;
     }
 };
