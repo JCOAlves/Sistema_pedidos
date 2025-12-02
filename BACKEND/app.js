@@ -11,6 +11,6 @@ const inicialRoutes = require("./routes/Route_Inicial");
 app.use("/pedidos", pedidosRoutes);
 app.use("/formulario", formularioRoutes);
 app.use("/menu", menuRoutes);
-app.use("/inicial", inicialRoutes);
+app.use("/", inicialRoutes);
 
 module.exports = app;
