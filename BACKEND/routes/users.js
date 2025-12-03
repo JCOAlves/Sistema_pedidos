@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/bom', function(req, res, next) {
+  res.send('Bem-vindo ao Express');
 });
 
-router.get('/sobre', function(req, res, next) {
-  res.send('Olá mundo');
+router.get('/sobre', function(req, res) {
+  res.send("'Olá mundo'");
 });
 
 module.exports = router;
