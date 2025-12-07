@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/12/2025 às 16:29
+-- Tempo de geração: 07/12/2025 às 19:40
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -86,6 +86,16 @@ CREATE TABLE `itens` (
   `Preco` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `itens`
+--
+
+INSERT INTO `itens` (`ID_item`, `NomeItem`, `TipoItem`, `Ingredientes`, `Preco`) VALUES
+(1, 'Frango Grelhado', 'Prato', 'Peito de frango, arroz, batata', 28.5),
+(2, 'Refrigerante 2L', 'Bebida', 'Coca-Cola, Fanta, Guaraná', 12),
+(3, 'Suco Natural', 'Bebida', 'Laranja, Limão, Abacaxi', 8.5),
+(4, 'Água Mineral', 'Bebida', 'Sem gás, com gás', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -150,6 +160,13 @@ CREATE TABLE `restaurantes` (
   `ID_restaurante` int(11) NOT NULL,
   `NomeRestaurante` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `restaurantes`
+--
+
+INSERT INTO `restaurantes` (`ID_restaurante`, `NomeRestaurante`) VALUES
+(1, 'Churrascaria');
 
 --
 -- Índices para tabelas despejadas
@@ -256,7 +273,7 @@ ALTER TABLE `funcionarios`
 -- AUTO_INCREMENT de tabela `itens`
 --
 ALTER TABLE `itens`
-  MODIFY `ID_item` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `pagamentos`
@@ -286,7 +303,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `restaurantes`
 --
 ALTER TABLE `restaurantes`
-  MODIFY `ID_restaurante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_restaurante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para tabelas despejadas
