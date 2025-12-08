@@ -27,7 +27,6 @@ export async function POST(rota, objeto) {
             body: objetoJSON
         });
         resposta = await resposta.json();
-        console.log(objeto);
         return resposta;
     }
     catch (erro) {
@@ -46,7 +45,6 @@ export async function PUT(rotaEspecifica, objeto) {
             body: objetoJSON
         });
         resposta = await resposta.json();
-        console.log(resposta);
         return resposta;
     }
     catch(erro){
@@ -63,7 +61,6 @@ export async function DELETE(rotaEspecifica) {
             headers: { 'Content-Type': 'application/json' }
         });
         resposta = await resposta.json();
-        console.log(resposta);
         return resposta;
     }
     catch(erro){

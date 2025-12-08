@@ -1,4 +1,8 @@
-export default function Home() {
+import {useNavigate} from "react-router-dom"
+
+export default function Inicial() {
+  const navigate = useNavigate()
+
   return (
     <main
       className="relative min-h-screen bg-cover bg-center"
@@ -19,8 +23,11 @@ export default function Home() {
             Qualidade, sabor e praticidade direto no seu sistema!
           </p>
 
-          <button className="mt-8 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg w-fit">
+          <button className="mt-8 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg w-fit" onClick={() => {navigate("/formulario")}}>
             Fazer Pedido
+          </button>
+          <button className="mt-8 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg w-fit" style={{marginLeft: "20px"}}  onClick={() => {navigate("/menu")}}>
+            Ver Menu
           </button>
         </div>
  
