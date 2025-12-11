@@ -1,3 +1,26 @@
+# Dependências
 node_modules/
+npm-debug.log*
 
+# Variáveis de ambiente (IMPORTANTE!)
 .env
+.env.local
+
+# Banco de dados (se tiver arquivos locais)
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Backups
+*.bak
