@@ -1,3 +1,9 @@
 @import "tailwindcss";
 
- 
+html {
+    scroll-behavior: smooth;
+}
+
+.image-overlay {
+    background: linear-gradient(to bottom, rgba(15, 17, 21, 0.3), rgba(15, 17, 21, 0.9));
+}

@@ -1,38 +1,26 @@
+
+
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-10 pb-6">
-      <div className="max-w-6xl mx-auto px-6">
- 
-        <div className="text-center mb-10">
-          <h2 className="text-2xl font-bold tracking-wide">Sistema de Pedidos</h2>
-          <p className="text-gray-400 mt-2 text-sm">Organize seus pedidos com facilidade!</p>
+    <footer className="bg-black py-12 border-t border-gray-900">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="text-center md:text-left">
+                <h4 className="text-2xl font-serif text-gold mb-2">I&F Restaurante</h4>
+                <p className="text-gray-500 text-sm">Rua Socorro, 321 - Parnamoscou</p>
+                <p className="text-gray-500 text-sm">+55 4002-8922</p>
+            </div>
+
+            <div className="flex space-x-6">
+                <a href="#home"
+                    className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition">H</a>
+                <a href="#about"
+                    className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition">S</a>
+                <a href="#reservation"
+                    className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition">H</a>
+            </div>
+
+            <div className="text-gray-600 text-xs text-center md:text-right">&copy; 2023 I&F Projeto. <br/>Todos os direitos reservados.</div>
         </div>
- 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm mb-10 text-center">
-
-          <div className="space-y-2">
-            <p className="font-semibold text-white">Formulário</p>
-            <a href="/formulario" className="block hover:text-white">Novo Pedido</a>
-          </div>
-
-          <div className="space-y-2">
-            <p className="font-semibold text-white">Menu</p>
-            <a href="/menu" className="block hover:text-white">Cardápio</a>
-          </div>
-
-          <div className="space-y-2">
-            <p className="font-semibold text-white">Pedidos</p>
-            <a href="/pedidos" className="block hover:text-white">Ver Pedidos</a>
-          </div>
-
-        </div>
- 
-        <div className="text-center text-gray-500 text-xs border-t border-gray-700 pt-4">
-          <p>SISTEMA DE PEDIDOS™ © {new Date().getFullYear()}. Todos os direitos reservados.</p>
-          <p className="mt-1">Imagens meramente ilustrativas.</p>
-        </div>
-
-      </div>
     </footer>
   );
 }
