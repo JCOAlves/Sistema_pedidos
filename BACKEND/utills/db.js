@@ -7,7 +7,7 @@ const config = {
     port: 3306,
     user: 'root',
     password: '',
-    database: 'sistema_restaurante',
+    database: 'sistema_restaurante_bd',
     charset: 'utf8mb4',
     waitForConnections: true,
     connectionLimit: 10,

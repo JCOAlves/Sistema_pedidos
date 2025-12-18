@@ -370,8 +370,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-
-const PORT = process.env.PORT || 3000;
+//A APLICAÇÃO ESTA RODANDO NA PORTA 3001, MAS TAMBEM TÁ RONDANDO NA 3000
+//o SERVIDOR ESTÁ SUBINDO A APLICAÇÃO DUAS VEZES, UMA PRA 3000 E OUTRA PARA 3001
+//QUANDO ESTÁ RODANDO NA 3000, QUANDO SOBE PELA SEGUNDA VEZ, MATA A PRIMEIRA
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`
                API REST
@@ -391,7 +393,7 @@ app.listen(PORT, () => {
     /api/clientes        - CRUD de clientes
     /api/itens           - Lista todos itens
     
-    Frontend pode acessar em: http://localhost:3000/api
+    Frontend pode acessar em: http://localhost:3000 (API)
     CORS configurado para: http://localhost:5173 (React/Vite)
     
     API REST criada e funcionando!
