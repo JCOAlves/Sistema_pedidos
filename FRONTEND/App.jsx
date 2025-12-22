@@ -1,8 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 import Inicial from "./paginas/Inicial.jsx"
 import Formulario from "./paginas/Formulario.jsx"
 import Menu from "./paginas/Menu.jsx"
 import Pedidos from "./paginas/Pedidos.jsx" 
+import Login from "./paginas/Login.jsx"
+import Footer from "./componentes/Footer.jsx"
+
+function VerificacaoLogin({logado, children}){
+    if (logado) {
+      return children
+    }
+    else{
+      return <Navigate to={"/login"}/>
+    }
+}
 
 function App() {
   return (
@@ -10,7 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Inicial/>} />
-          <Route path="/login" element={<Formulario />} /> 
+          <Route path="/login" element={<Login/>} /> 
           <Route path="/menu" element={<Menu/>} /> 
           <Route path="/form/pedido" element={<h1>Formulario de pedido</h1>}/>
           <Route path="/pedidos" element={<Pedidos />} />
@@ -26,6 +37,7 @@ function App() {
           <Route path="*" element={<h1>Página não encontrada. <br/> Volte para a página inicial</h1>}/>
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </>
   )
 }

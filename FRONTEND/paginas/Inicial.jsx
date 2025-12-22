@@ -69,6 +69,5 @@ export default function Inicial() {
           grupos acima de 6 pessoas sem aviso prévio.</p>
       </div>
     </section>
-    <Footer />
   </>);
 }

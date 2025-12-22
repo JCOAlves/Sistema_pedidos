@@ -42,7 +42,8 @@ CREATE TABLE `clientes` (
   `ID_cliente` int(11) NOT NULL,
   `NomeCliente` varchar(100) NOT NULL,
   `NumeroTelefone` varchar(14) NOT NULL,
-  `EnderecoEmail` varchar(100) NOT NULL
+  `EnderecoEmail` varchar(100) NOT NULL,
+  `cpf` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -92,10 +93,19 @@ CREATE TABLE `itens` (
 
 INSERT INTO `itens` (`ID_item`, `NomeItem`, `TipoItem`, `Ingredientes`, `Preco`) VALUES
 (1, 'Frango Grelhado', 'Prato', 'Peito de frango, arroz, batata', 28.5),
-(2, 'Refrigerante 2L', 'Bebida', 'Coca-Cola, Fanta, Guaraná', 12),
-(3, 'Suco Natural', 'Bebida', 'Laranja, Limão, Abacaxi', 8.5),
-(4, 'Água Mineral', 'Bebida', 'Sem gás, com gás', 4);
-
+(2, 'Hambúrguer Clássico', 'Prato', 'Pão, carne bovina, queijo, alface, tomate', 25),
+(3, 'X-Bacon', 'Prato', 'Pão, carne bovina, queijo, bacon, maionese', 28),
+(4, 'Pizza Margherita', 'Prato', 'Massa, molho de tomate, mussarela, manjericão', 42),
+(5, 'Batata Frita', 'Prato', 'Batata, óleo e sal', 15),
+(6, 'Cheeseburger Duplo', 'Prato', 'Pão, duas carnes bovinas, queijo cheddar, cebola', 32),
+(7, 'X-Salada', 'Prato', 'Pão, carne bovina, queijo, alface, tomate, maionese', 27),
+(8, 'Pizza Calabresa', 'Prato', 'Massa, molho de tomate, mussarela, calabresa e cebola', 45),
+(9, 'Pizza Quatro Queijos', 'Prato', 'Massa, mussarela, provolone, parmesão, gorgonzola', 48),
+(10, 'Refrigerante Lata', 'Bebida', 'Refrigerante de 350ml', 6),
+(12, 'Suco Natural de Laranja', 'Bebida', 'Laranja natural', 8.5),
+(13, 'Suco de Maracujá', 'Bebida', 'Polpa de maracujá e água', 8.5),
+(14, 'Suco de Limão', 'Bebida', 'Limão, água e açúcar', 7.5),
+(15, 'Água Mineral', 'Bebida', 'Água sem gás 500ml', 4);
 -- --------------------------------------------------------
 
 --
