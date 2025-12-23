@@ -1,6 +1,5 @@
 import BarraNavegacao from "../componentes/Navegacao.jsx";
 import Header from "../componentes/Header.jsx";
-import Footer from "../componentes/Footer.jsx";
 
 export default function Inicial() {
 

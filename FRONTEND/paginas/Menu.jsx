@@ -9,20 +9,33 @@ export default function Menu() {
   const [tipoIten, setTipo] = useState("");
   const navigate = useNavigate();
 
+  function Filtragem(tipo, indice){
+    const listaBotoes_item = document.querySelectorAll(".botao_tipoIten");
+    if(tipoIten === tipo){
+      setTipo("");
+    }else{
+      setTipo(tipo);
+    }
+    listaBotoes_item.forEach(botao => {
+      botao.className = "border border-gold text-gold botao_tipoIten";
+    })
+    listaBotoes_item[indice].className = "bg-gold text-darker botao_tipoIten"
+  }
+
   useEffect(() => {
     switch(tipoIten){
       case "Prato":
         setItens([
           { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" },
           { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" }
+          { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" }
         ]);
         break;
       case "Bebida":
         setItens([
           { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" },
           { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" }
+          { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" }
         ]);
         break;
       default:
@@ -33,7 +46,7 @@ export default function Menu() {
         ]);
         break;
     }
-  }, []);
+  }, [tipoIten]);
 
 
   return (
@@ -46,6 +59,11 @@ export default function Menu() {
           <h2 className="font-serif text-4xl md:text-5xl text-white mt-2 uppercase tracking-wide">Nossos Especiais
           </h2>
           <div className="w-24 h-1 bg-gold mx-auto mt-6"></div>
+          <nav className="tiposIten">
+            <button className="bg-gold text-darker botao_tipoIten" onClick={() => Filtragem("", 0)}>Menu completo</button>
+            <button className="border border-gold text-gold hover:bg-gold hover:text-darker botao_tipoIten" onClick={() => Filtragem("Prato", 1)}>Pratos</button>
+            <button className="border border-gold text-gold hover:bg-gold hover:text-darker botao_tipoIten" onClick={() => Filtragem("Bebida", 2)}>Bebidas</button>
+          </nav>
         </div>
 
         <div className="grid grid-cols-1 gap-12">
