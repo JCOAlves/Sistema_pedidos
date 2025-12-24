@@ -1,20 +1,13 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET home page.  
-router.get('/index/:nome/:sobrenome', function(req, res, next) {
-  res.render('index', { title: req.params.nome+" "+req.params.sobrenome });
-});
- 
-router.get('/notas', function(req, res){
-  let nota1 = Number(req.query.nota1);
-  let nota2 = Number(req.query.nota2);
-  let nota3 = Number(req.query.nota3);
-  const media = ((nota1+nota2+nota3)/3).toFixed(0);
-  const mensagem = media >= 60 ? `Sua média é ${media}.\nParabens! Você foi aprovado!` : `Sua média é ${media}.\nInfelizmente você foi reprovado.`;
-  res.send(mensagem);
-});
-
-*/
+router.use('/status', require('./Route_Status'));
+router.use('/restaurantes', require('./Route_Restaurantes')); 
+router.use('/itens', require('./Route_Itens'));
+router.use('/clientes', require('./Route_Clientes'));
+router.use('/pedidos', require('./Route_Pedidos'));
+router.use('/funcionarios', require('./Route_Funcionarios'));
+router.use('/menu', require('./Route_Menu'));
+router.use('/formulario', require('./Route_Formulario'));
 
 module.exports = router;

@@ -1,16 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const pedidosController = require('../controllers/pedidosController');
 
-const {
-  getPedidos,
-  createPedido,
-  updatePedido,
-  deletePedido
-} = require("../controllers/pedidosController");
-
-router.get("/", getPedidos);
-router.post("/", createPedido);
-router.put("/:id", updatePedido);
-router.delete("/:id", deletePedido);
+router.get('/', pedidosController.listar);
+router.get('/:id', pedidosController.buscarPorId);
+router.post('/', pedidosController.criar);
+router.put('/:id', pedidosController.atualizar);
 
 module.exports = router;

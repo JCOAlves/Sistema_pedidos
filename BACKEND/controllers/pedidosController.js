@@ -1,40 +1,30 @@
-let pedidos = [];
-
-exports.getPedidos = (req, res) => {
-  res.json(pedidos);
+exports.listar = (req, res) => {
+  res.json([
+    { id: 1, cliente: 'Carlos', total: 45 },
+    { id: 2, cliente: 'Ana', total: 30 }
+  ]);
 };
 
-exports.createPedido = (req, res) => {
-  const novo = {
-    id: Date.now(),
-    item: req.body.item,
-    quantidade: req.body.quantidade
-  };
-
-  pedidos.push(novo);
-  res.status(201).json({ msg: "Pedido criado", novo });
+exports.buscarPorId = (req, res) => {
+  const { id } = req.params;
+  res.json({
+    id,
+    cliente: 'Carlos',
+    total: 45
+  });
 };
 
-exports.updatePedido = (req, res) => {
-  const id = Number(req.params.id);
-  const pedido = pedidos.find(p => p.id === id);
-
-  if (!pedido) {
-    return res.status(404).json({ error: "Pedido não encontrado" });
-  }
-
-  pedido.item = req.body.item ?? pedido.item;
-  pedido.quantidade = req.body.quantidade ?? pedido.quantidade;
-
-  res.json({ msg: "Pedido atualizado", pedido });
+exports.criar = (req, res) => {
+  res.status(201).json({
+    message: 'Pedido criado com sucesso',
+    dados: req.body
+  });
 };
 
-exports.deletePedido = (req, res) => {
-  const id = Number(req.params.id);
-  const before = pedidos.length;
-  pedidos = pedidos.filter(p => p.id !== id);
-  const removed = before !== pedidos.length;
-
-  if (!removed) return res.status(404).json({ error: "Pedido não encontrado" });
-  return res.json({ msg: "Pedido removido" });
+exports.atualizar = (req, res) => {
+  const { id } = req.params;
+  res.json({
+    message: `Pedido ${id} atualizado`,
+    dados: req.body
+  });
 };

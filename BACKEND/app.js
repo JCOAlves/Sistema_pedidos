@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 
+const apiRoutes = require('./routes/index');
+app.use('/api', apiRoutes);
+
 app.use(cors({
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

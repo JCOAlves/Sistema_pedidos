@@ -1,5 +1,8 @@
-const menus = [];
-
-exports.getMenus = (req, res) => {
-  res.json(menus);
+exports.listar = (req, res) => {
+  res.json([
+    'Início',
+    'Cardápio',
+    'Pedidos',
+    'Clientes'
+  ]);
 };
