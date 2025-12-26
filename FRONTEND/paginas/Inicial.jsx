@@ -1,6 +1,5 @@
 import BarraNavegacao from "../componentes/Navegacao.jsx";
 import Header from "../componentes/Header.jsx";
-import Footer from "../componentes/Footer.jsx";
 
 export default function Inicial() {
 
@@ -69,6 +68,5 @@ export default function Inicial() {
           grupos acima de 6 pessoas sem aviso prévio.</p>
       </div>
     </section>
-    <Footer />
   </>);
 }

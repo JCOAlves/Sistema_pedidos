@@ -7,3 +7,39 @@ html {
 .image-overlay {
     background: linear-gradient(to bottom, rgba(15, 17, 21, 0.3), rgba(15, 17, 21, 0.9));
 }
+
+/*Estilos da página Menu*/
+.botao_tipoIten{
+    border-radius: 1px;
+    padding: 4px 6px;
+}
+
+.tiposIten{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 0px 8px;
+    margin: 20px auto;
+}
+
+
+.cardItem{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
+}
+
+@media screen and (max-width: 600px){
+    .cardItem{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 12px;
+    }
+}
+
+.imagemItem{
+    width: auto;
+    border-radius: 3px;
+}
