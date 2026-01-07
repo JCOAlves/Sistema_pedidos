@@ -1,5 +1,6 @@
 import BarraNavegacao from "../componentes/Navegacao.jsx";
 import Header from "../componentes/Header.jsx";
+import Formulario from "./Formulario.jsx";
 
 export default function Inicial() {
 
@@ -63,6 +64,10 @@ export default function Inicial() {
             <span className="text-gray-400">17:00 - 00:00</span>
           </div>
         </div>
+
+        <section className="py-20 bg-dark border-t border-gray-800">
+          <Formulario />
+        </section>
 
         <p className="mt-8 text-gray-500 text-sm">Reservas são limitadas a 2 horas. Por favor, note que não aceitamos
           grupos acima de 6 pessoas sem aviso prévio.</p>

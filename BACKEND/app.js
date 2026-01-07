@@ -2,9 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 
-const routes = require('./routes');
-app.use('/api', routes);
-
+// Consolidated routes (use index.js in routes folder)
 const apiRoutes = require('./routes/index');
 app.use('/api', apiRoutes);
 
@@ -189,11 +187,27 @@ app.post("/api/pedidos", async (req, res) => {
             );
             
             const pedidoId = pedidoResult.insertId;
-            
+
             for (const item of itens || []) {
+                // support two formats: { itemId, quantidade } or { nome, quantidade }
+                let itemId = item.itemId;
+                if (!itemId && item.nome) {
+                    try {
+                        const [rows] = await connection.execute(
+                            'SELECT ID_item FROM itens WHERE NomeItem = ? LIMIT 1',
+                            [item.nome]
+                        );
+                        if (rows && rows[0] && rows[0].ID_item) {
+                            itemId = rows[0].ID_item;
+                        }
+                    } catch (e) {
+                        // ignore lookup errors and continue with null itemId
+                    }
+                }
+
                 await connection.execute(
                     'INSERT INTO pedido_item (Pedido, Item, Quantidade) VALUES (?, ?, ?)',
-                    [pedidoId, item.itemId, item.quantidade || 1]
+                    [pedidoId, itemId || null, item.quantidade || 1]
                 );
             }
             
@@ -376,34 +390,5 @@ app.use((err, req, res, next) => {
     });
 });
 
-//A APLICAÇÃO ESTA RODANDO NA PORTA 3001, MAS TAMBEM TÁ RONDANDO NA 3000
-//o SERVIDOR ESTÁ SUBINDO A APLICAÇÃO DUAS VEZES, UMA PRA 3000 E OUTRA PARA 3001
-//QUANDO ESTÁ RODANDO NA 3000, QUANDO SOBE PELA SEGUNDA VEZ, MATA A PRIMEIRA
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`
-               API REST
-         Sistema de Restaurante
-  
-    
-    Servidor: http://localhost:${PORT}
-    Banco: MySQL/XAMPP
-    Status: Conectado a 10 tabelas
-    
-    ENDPOINTS PRINCIPAIS:
-    /                    - Lista todos endpoints
-    /api/status          - Teste de conexão com banco
-    /api/restaurantes    - Lista restaurantes
-    /api/cardapio        - Mostra cardápio
-    /api/pedidos         - CRUD de pedidos
-    /api/clientes        - CRUD de clientes
-    /api/itens           - Lista todos itens
-    
-    Frontend pode acessar em: http://localhost:3000 (API)
-    CORS configurado para: http://localhost:5173 (React/Vite)
-    
-    API REST criada e funcionando!
-    `);
-});
-
+// Export the configured Express app; server should be started by bin/www
 module.exports = app;

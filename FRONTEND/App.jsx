@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 import Inicial from "./paginas/Inicial.jsx"
-import Formulario from "./paginas/Formulario.jsx"
+import Formulario from "./paginas/Formulario.jsx";
 import Menu from "./paginas/Menu.jsx"
 import Pedidos from "./paginas/Pedidos.jsx" 
 import Login from "./paginas/Login.jsx"
@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<Inicial/>} />
           <Route path="/login" element={<Login/>} /> 
           <Route path="/menu" element={<Menu/>} /> 
-          <Route path="/form/pedido" element={<h1>Formulario de pedido</h1>}/>
+          <Route path="/form/pedido" element={<Formulario />} />
           <Route path="/pedidos" element={<Pedidos />} />
           <Route path="/pedidos/:id" element={<Pedidos />}/>
           <Route path="/form/funcionario" element={<h1>Formulario de funcionario</h1>}/>

@@ -21,7 +21,7 @@ export default function Header() {
         </p>
 
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <BotaoComun texto={"Fazer Pedido"} funcao={() => {navigate("/")}}/>
+          <BotaoComun texto={"Fazer Pedido"} funcao={() => {navigate("/form/pedido")}}/>
           <BotaoTransparente texto={"Ver Menu"}  funcao={() => {navigate("/menu")}}/>
         </div>
       </div>
