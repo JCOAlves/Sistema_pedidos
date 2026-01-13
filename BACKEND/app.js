@@ -1,26 +1,24 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
-const cors = require('cors');
-
-// Consolidated routes (use index.js in routes folder)
-const apiRoutes = require('./routes/index');
-app.use('/api', apiRoutes);
-
+ 
 app.use(cors({
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type'],
-    credentials: true
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
-const db = require('./utills/db');
-
-app.use((req, res, next) => {
-    req.db = db;
-    next();
-});
-
+ 
 app.use(express.json());
+ 
+const db = require('./utills/db');
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
+ 
+const routes = require('./routes');
+app.use('/api', routes);
 
 app.get("/", (req, res) => {
     res.json({
@@ -38,6 +36,7 @@ app.get("/", (req, res) => {
             "PUT    /api/pedidos/:id      - Atualiza pedido",
             "GET    /api/itens            - Lista todos os itens"
         ]
+
     });
 });
 
