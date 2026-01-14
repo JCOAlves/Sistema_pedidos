@@ -65,10 +65,6 @@ export default function Inicial() {
           </div>
         </div>
 
-        <section className="py-20 bg-dark border-t border-gray-800">
-          <Formulario />
-        </section>
-
         <p className="mt-8 text-gray-500 text-sm">Reservas são limitadas a 2 horas. Por favor, note que não aceitamos
           grupos acima de 6 pessoas sem aviso prévio.</p>
       </div>
