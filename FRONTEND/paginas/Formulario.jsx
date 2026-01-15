@@ -27,11 +27,11 @@ export default function Formulario() {
         setItensDisponiveis(dados);
       } else {
         console.error("Formato inesperado:", dados);
-        setMensagem("❌ Erro ao carregar itens");
+        setMensagem("Erro ao carregar itens");
       }
     } catch (erro) {
       console.error("Erro ao carregar itens:", erro);
-      setMensagem("❌ Erro de conexão ao carregar itens");
+      setMensagem("Erro de conexão ao carregar itens");
     } finally {
       setCarregandoItens(false);
     }
@@ -58,7 +58,7 @@ export default function Formulario() {
         preco: preco
       }]);
     }
-    setMensagem(`✅ ${nome} adicionado ao carrinho`);
+    setMensagem(`${nome} adicionado ao carrinho`);
     setTimeout(() => setMensagem(""), 2000);
   }
 
@@ -80,7 +80,7 @@ export default function Formulario() {
     e.preventDefault();
 
     if (itensCarrinho.length === 0) {
-      setMensagem("❌ Adicione pelo menos um item ao carrinho");
+      setMensagem("Adicione pelo menos um item ao carrinho");
       return;
     }
 
@@ -99,17 +99,16 @@ export default function Formulario() {
       console.log("Resposta do pedido:", dados);
 
       if (dados.success) {
-        setMensagem(`✅ Pedido #${dados.data.id} criado com sucesso!`);
+        setMensagem(`Pedido #${dados.data.id} criado com sucesso!`);
         setItensCarrinho([]);
         setObservacoes("");
         setPraViagem(true);
-        // Scroll para cima para ver a mensagem
         window.scrollTo(0, 0);
       } else {
-        setMensagem(`❌ ${dados.message || "Erro ao criar pedido"}`);
+        setMensagem(`${dados.message || "Erro ao criar pedido"}`);
       }
     } catch (error) {
-      setMensagem("❌ Erro de conexão com o servidor");
+      setMensagem("Erro de conexão com o servidor");
       console.error(error);
     } finally {
       setCarregando(false);
@@ -131,7 +130,7 @@ export default function Formulario() {
     <div className="p-6 max-w-6xl mx-auto">
       {mensagem && (
         <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${
-          mensagem.includes('✅') ? 'bg-green-600' : 'bg-red-600'
+          mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
         }`}>
           {mensagem}
         </div>
@@ -140,7 +139,7 @@ export default function Formulario() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Coluna esquerda: Menu */}
         <div className="lg:col-span-2 space-y-6">
-          <h1 className="text-3xl font-bold text-white">📋 Fazer Pedido</h1>
+          <h1 className="text-3xl font-bold text-white">Fazer Pedido</h1>
 
           {carregandoItens ? (
             <div className="text-center text-gray-400 py-8">
@@ -155,7 +154,7 @@ export default function Formulario() {
               {/* Pratos */}
               {pratos.length > 0 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-gold mb-4">🍽️ Pratos</h2>
+                  <h2 className="text-2xl font-bold text-gold mb-4">Pratos</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {pratos.map(item => (
                       <div key={item.ID_item || item.id} className="bg-dark rounded-lg p-4 border border-gray-700 hover:border-gold transition">
@@ -185,7 +184,7 @@ export default function Formulario() {
               {/* Bebidas */}
               {bebidas.length > 0 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-gold mb-4">🥤 Bebidas</h2>
+                  <h2 className="text-2xl font-bold text-gold mb-4">Bebidas</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {bebidas.map(item => (
                       <div key={item.ID_item || item.id} className="bg-dark rounded-lg p-4 border border-gray-700 hover:border-gold transition">
@@ -218,7 +217,7 @@ export default function Formulario() {
         {/* Coluna direita: Carrinho */}
         <div className="lg:col-span-1">
           <div className="bg-dark rounded-lg p-6 border border-gray-700 sticky top-20">
-            <h2 className="text-2xl font-bold text-white mb-4">🛒 Seu Pedido</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Seu Pedido</h2>
 
             {/* Items no carrinho */}
             <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
@@ -255,7 +254,7 @@ export default function Formulario() {
                         onClick={() => removerItem(item.id_item)}
                         className="ml-auto bg-gray-700 text-white px-3 py-1 rounded text-xs hover:bg-gray-600 font-bold"
                       >
-                        ✕
+                        X
                       </button>
                     </div>
                   </div>
@@ -298,7 +297,7 @@ export default function Formulario() {
                 disabled={carregando || itensCarrinho.length === 0}
                 className="w-full bg-gold text-black font-bold py-3 rounded hover:bg-yellow-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {carregando ? "⏳ Enviando..." : "✓ Fazer Pedido"}
+                {carregando ? "Enviando..." : "Fazer Pedido"}
               </button>
             </form>
           </div>
@@ -306,4 +305,4 @@ export default function Formulario() {
       </div>
     </div>
   );
-}
+} 
