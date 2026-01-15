@@ -1,9 +1,12 @@
 //Funções de requisições HTTP de JSONs
 
+const API_BASE_URL = 'http://localhost:3000/api';
+
 //Metodo GET
 export async function GET(rota){ 
     try { 
-        let resposta = await fetch(rota);
+        const urlCompleta = rota.startsWith('http') ? rota : `${API_BASE_URL}${rota}`;
+        let resposta = await fetch(urlCompleta);
         const dados = await resposta.json();
         if("mensagemServidor" in dados){
             return dados["mensagemServidor"];
@@ -20,8 +23,9 @@ export async function GET(rota){
 //Metodo POST
 export async function POST(rota, objeto) {
     try {
+        const urlCompleta = rota.startsWith('http') ? rota : `${API_BASE_URL}${rota}`;
         const objetoJSON = JSON.stringify(objeto);
-        let resposta = await fetch(rota, {
+        let resposta = await fetch(urlCompleta, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: objetoJSON
@@ -38,8 +42,9 @@ export async function POST(rota, objeto) {
 //Metodo PUT
 export async function PUT(rotaEspecifica, objeto) {
     try{
+        const urlCompleta = rotaEspecifica.startsWith('http') ? rotaEspecifica : `${API_BASE_URL}${rotaEspecifica}`;
         const objetoJSON = JSON.stringify(objeto);
-        let resposta = await fetch(rotaEspecifica, {
+        let resposta = await fetch(urlCompleta, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: objetoJSON
@@ -56,7 +61,8 @@ export async function PUT(rotaEspecifica, objeto) {
 //Metedo DELETE
 export async function DELETE(rotaEspecifica) {
     try{
-        let resposta = await fetch(rotaEspecifica, {
+        const urlCompleta = rotaEspecifica.startsWith('http') ? rotaEspecifica : `${API_BASE_URL}${rotaEspecifica}`;
+        let resposta = await fetch(urlCompleta, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         });

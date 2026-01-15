@@ -2,10 +2,12 @@ import Item from "../componentes/Itens.jsx";
 import {BotaoComun} from "../componentes/Botoes.jsx"
 import {useNavigate} from "react-router-dom"
 import {useState, useEffect} from "react"
+import {GET} from "../MetodosHTTP.js"
 
 //ADICIONAR SELEÇÃO PARA VER BEBIDAS E PRATOS
 export default function Menu() {
   const [listaItens, setItens] = useState([]);
+  const [todosItens, setTodosItens] = useState([]);
   const [tipoIten, setTipo] = useState("");
   const navigate = useNavigate();
 
@@ -22,31 +24,26 @@ export default function Menu() {
     listaBotoes_item[indice].className = "bg-gold text-darker botao_tipoIten"
   }
 
+  // Carregar itens da API ao montar o componente
   useEffect(() => {
-    switch(tipoIten){
-      case "Prato":
-        setItens([
-          { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" }
-        ]);
-        break;
-      case "Bebida":
-        setItens([
-          { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" }
-        ]);
-        break;
-      default:
-        setItens([
-          { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" },
-          { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" }
-        ]);
-        break;
+    const carregarItens = async () => {
+      const dados = await GET('/itens');
+      if (Array.isArray(dados)) {
+        setTodosItens(dados);
+      }
+    };
+    carregarItens();
+  }, []);
+
+  // Filtrar itens por tipo
+  useEffect(() => {
+    if (tipoIten === "") {
+      setItens(todosItens);
+    } else {
+      const itensFiltrados = todosItens.filter(item => item.TipoItem === tipoIten);
+      setItens(itensFiltrados);
     }
-  }, [tipoIten]);
+  }, [tipoIten, todosItens]);
 
 
   return (
@@ -67,7 +64,7 @@ export default function Menu() {
         </div>
 
         <div className="grid grid-cols-1 gap-12">
-          {listaItens.map((iten, index) => (<Item key={index} nome={iten["nome"]} preco={iten["preco"]} ingredientes={iten["ingredientes"]} />))}
+          {listaItens.map((iten, index) => (<Item key={index} nome={iten["NomeItem"]} preco={iten["Preco"]} ingredientes={iten["Ingredientes"]} />))}
         </div>
       </div>
 
