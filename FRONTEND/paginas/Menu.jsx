@@ -1,14 +1,15 @@
 import Item from "../componentes/Itens.jsx";
-import { BotaoComun } from "../componentes/Botoes.jsx"
-import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
-import { GET } from "../MetodosHTTP.js"
+import {BotaoComun} from "../componentes/Botoes.jsx"
+import {useNavigate} from "react-router-dom"
+import {useState, useEffect} from "react"
+import {GET} from "../MetodosHTTP.js"
 
+//ADICIONAR SELEÇÃO PARA VER BEBIDAS E PRATOS
 export default function Menu() {
-    const [listaItens, setItens] = useState([]);
-    const [tipoIten, setTipo] = useState("");
-    const [mensagem, setMensagem] = useState("");
-    const navigate = useNavigate();
+  const [listaItens, setItens] = useState([]);
+  const [todosItens, setTodosItens] = useState([]);
+  const [tipoIten, setTipo] = useState("");
+  const navigate = useNavigate();
 
     function Filtragem(tipo, indice) {
         const listaBotoes_item = document.querySelectorAll(".botao_tipoIten");
@@ -23,49 +24,26 @@ export default function Menu() {
         listaBotoes_item[indice].className = "rounded bg-gold text-darker botao_tipoIten"
     }
 
-    async function BuscarItens(tipoIten) {
-        try {
-            let itens = [];
-            switch (tipoIten) {
-                case "Prato":
-                    //itens = await GET("http://localhost:3000");
-                    itens = [
-                        { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" },
-                        { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" },
-                        { "nome": "Lorem Prato", "preco": 0, "ingredientes": "1,2,3,4" }
-                    ]
-                    setItens(itens);
-                    break;
+  // Carregar itens da API ao montar o componente
+  useEffect(() => {
+    const carregarItens = async () => {
+      const dados = await GET('/itens');
+      if (Array.isArray(dados)) {
+        setTodosItens(dados);
+      }
+    };
+    carregarItens();
+  }, []);
 
-                case "Bebida":
-                    //itens = await GET("http://localhost:3000");
-                    itens = [
-                        { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" },
-                        { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" },
-                        { "nome": "Lorem Bebida", "preco": 0, "ingredientes": "1,2,3,4" }
-                    ]
-                    setItens(itens);
-                    break;
-
-                default:
-                    //itens = await GET("http://localhost:3000");
-                    itens = [
-                        { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" },
-                        { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" },
-                        { "nome": "Lorem", "preco": 0, "ingredientes": "1,2,3,4" }
-                    ]
-                    setItens(itens);
-                    break;
-            }
-
-        } catch (error) {
-            setMensagem("Erro na busca de itens do menu.");
-        }
+  // Filtrar itens por tipo
+  useEffect(() => {
+    if (tipoIten === "") {
+      setItens(todosItens);
+    } else {
+      const itensFiltrados = todosItens.filter(item => item.TipoItem === tipoIten);
+      setItens(itensFiltrados);
     }
-
-    useEffect(() => {
-        (async () => { await BuscarItens(tipoIten) })();
-    }, [tipoIten]);
+  }, [tipoIten, todosItens]);
 
 
     return (
@@ -85,15 +63,14 @@ export default function Menu() {
                     </nav>
                 </div>
 
-                <div className="grid grid-cols-1 gap-12">
-                    {listaItens.map((iten, index) => (<Item key={index} nome={iten["nome"]} preco={iten["preco"]} ingredientes={iten["ingredientes"]} />))}
-                </div>
-            </div>
+        <div className="grid grid-cols-1 gap-12">
+          {listaItens.map((iten, index) => (<Item key={index} nome={iten["NomeItem"]} preco={iten["Preco"]} ingredientes={iten["Ingredientes"]} />))}
+        </div>
+      </div>
 
             <div className="text-center mt-16">
                 <BotaoComun texto={"Fazer Pedido"} funcao={() => navigate("/form/pedido")} />
             </div>
-            <p>{mensagem}</p>
         </section>
     );
 }

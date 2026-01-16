@@ -80,6 +80,10 @@ criarPool();
 module.exports = {
     pool,
     
+    async getConnection() {
+        return await pool.getConnection();
+    },
+    
     async query(sql, params = []) {
         try {
             const [rows] = await pool.query(sql, params);
