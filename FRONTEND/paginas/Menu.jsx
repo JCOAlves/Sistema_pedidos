@@ -9,6 +9,7 @@ export default function Menu() {
   const [listaItens, setItens] = useState([]);
   const [todosItens, setTodosItens] = useState([]);
   const [tipoIten, setTipo] = useState("");
+  const [mensagem, setMensagem] = useState("");
   const navigate = useNavigate();
 
     function Filtragem(tipo, indice) {
@@ -27,9 +28,13 @@ export default function Menu() {
   // Carregar itens da API ao montar o componente
   useEffect(() => {
     const carregarItens = async () => {
-      const dados = await GET('/itens');
-      if (Array.isArray(dados)) {
-        setTodosItens(dados);
+      try{
+        const dados = await GET('/itens');
+        if (Array.isArray(dados.data)) {
+          setTodosItens(dados.data);
+        }
+      } catch (error){
+        setMensagem("Erro na busca de itens.")
       }
     };
     carregarItens();
@@ -39,6 +44,7 @@ export default function Menu() {
   useEffect(() => {
     if (tipoIten === "") {
       setItens(todosItens);
+      
     } else {
       const itensFiltrados = todosItens.filter(item => item.TipoItem === tipoIten);
       setItens(itensFiltrados);

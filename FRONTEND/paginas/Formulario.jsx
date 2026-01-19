@@ -135,11 +135,13 @@ export default function Formulario() {
           {mensagem}
         </div>
       )}
+      
+      <h2 className="text-center font-serif text-4xl md:text-5xl text-white mt-2 uppercase tracking-wide">Fazer Pedido</h2>
+      <div className="w-24 h-1 bg-gold mx-auto mt-6"></div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Coluna esquerda: Menu */}
         <div className="lg:col-span-2 space-y-6">
-          <h1 className="text-3xl font-bold text-white">Fazer Pedido</h1>
 
           {carregandoItens ? (
             <div className="text-center text-gray-400 py-8">
