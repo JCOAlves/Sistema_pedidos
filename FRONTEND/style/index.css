@@ -10,7 +10,6 @@ html {
 
 /*Estilos da página Menu*/
 .botao_tipoIten{
-    border-radius: 1px;
     padding: 4px 6px;
 }
 
@@ -30,12 +29,27 @@ html {
     gap: 12px;
 }
 
-@media screen and (max-width: 600px){
+.botaoPedido{
+    position: fixed;
+    bottom: 65px;
+    right: 0;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0px 5px 15px 5px rgb(38, 37, 37);
+}
+
+@media screen and (max-width: 600){
     .cardItem{
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         gap: 12px;
+    }
+}
+
+@media screen and (max-width: 765px){
+    .botaoPedido{
+        bottom: 270px;
     }
 }
 

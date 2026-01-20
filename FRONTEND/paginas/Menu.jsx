@@ -57,7 +57,7 @@ export default function Menu() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
 
             <div className="max-w-5xl mx-auto px-6 relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-10">
                     <span className="font-script text-3xl text-gold">Culinária para todos os paladares</span>
                     <h2 className="font-serif text-4xl md:text-5xl text-white mt-2 uppercase tracking-wide">Nossos Especiais
                     </h2>
@@ -75,7 +75,8 @@ export default function Menu() {
       </div>
 
             <div className="text-center mt-16">
-                <BotaoComun texto={"Fazer Pedido"} funcao={() => navigate("/form/pedido")} />
+                <button className="rounded bg-gold text-darker px-8 py-3 uppercase tracking-widest w-max mr-auto ml-auto font-bold hover:bg-white transition duration-300 botaoPedido"
+                  onClick={() => navigate("/form/pedido")}>Fazer Pedido</button>
             </div>
         </section>
     );
