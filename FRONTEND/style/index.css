@@ -59,14 +59,12 @@ html {
 }
 
 /*Estilos campos*/
-.campo{
-    margin: 6px 0px 15px 0px;
-}
 
 label{
     font-size: 18px;
 }
 
 textarea{
-    height: 120px;
+    min-height: 120px;
+    max-height: 200px;
 }
