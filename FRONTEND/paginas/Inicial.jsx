@@ -1,11 +1,14 @@
 import BarraNavegacao from "../componentes/Navegacao.jsx";
 import Header from "../componentes/Header.jsx";
-import Formulario from "./Formulario.jsx";
 
 export default function Inicial() {
 
   return (<>
-    <BarraNavegacao />
+    <BarraNavegacao>
+      <a href="#home" className="hover:text-gold transition duration-300">Home</a>
+      <a href="#sobre" className="hover:text-gold transition duration-300">Sobre</a>
+      <a href="#horario" className="hover:text-gold transition duration-300">Horario</a>
+    </BarraNavegacao>
     <Header />
     <section id="sobre" className="py-20 bg-darker">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">

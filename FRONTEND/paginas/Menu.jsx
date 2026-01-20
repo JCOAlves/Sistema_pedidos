@@ -1,5 +1,5 @@
 import Item from "../componentes/Itens.jsx";
-import { BotaoComun } from "../componentes/Botoes.jsx"
+import BarraNavegacao from "../componentes/Navegacao.jsx"
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { GET } from "../MetodosHTTP.js"
@@ -56,8 +56,9 @@ export default function Menu() {
   }, [tipoIten, todosItens]);
 
 
-  return (
-    <section id="menu" className="py-24 bg-dark relative overflow-hidden">
+  return (<>
+    <BarraNavegacao>Menu</BarraNavegacao>
+    <section id="menu" className="py-24 bg-dark relative overflow-hidden mt-5">
       <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
@@ -93,5 +94,5 @@ export default function Menu() {
           onClick={() => navigate("/form/pedido")}>Fazer Pedido</button>
       </div>
     </section>
-  );
+    </>);
 }
