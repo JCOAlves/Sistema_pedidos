@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { POST, GET } from "../MetodosHTTP";
-import BarraNavegacao from "../componentes/Navegacao";
+import BarraNavegacao from "../componentes/Navegacao.jsx";
+import {validarCPF} from "../ValidacaoCampos.js"
 
 export default function Formulario() {
   const [itensDisponiveis, setItensDisponiveis] = useState([]);
@@ -78,6 +79,17 @@ export default function Formulario() {
       setItensCarrinho(itensCarrinho.map(i =>
         i.id_item === id_item ? { ...i, quantidade: novaQtd } : i
       ));
+    }
+  }
+
+  //Ajustar função
+  function VerificasaoCPF(CPF){
+    const CPFValido = validarCPF(CPF);
+    if(CPFValido){
+      setCPF(CPF);
+    } else{
+      setCPF(CPF);
+      setMensagem("CPF invalido");
     }
   }
 
@@ -307,15 +319,17 @@ export default function Formulario() {
 
             {/* Formulário */}
             <form onSubmit={enviarPedido} className="">
-              <label htmlFor="nome">Nome</label>
+              <span className="text-[12px]">*Campo obrigatorio</span> <br /><br /> {/*<br/> são temporarios*/}
+              <label htmlFor="nome">Nome*</label>
               <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
-                type="text" name="nome" id="nome" placeholder="Nome do cliente" value={nomeCliente} onInput={(e) => setNome(e.target.value)} />
+                type="text" name="nome" id="nome" placeholder="Nome do cliente" value={nomeCliente} onInput={(e) => setNome(e.target.value)} required maxLength={100}/>
 
-              <label htmlFor="cpf">CPF</label>
+              <label htmlFor="cpf">CPF*</label>
               <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
-                type="text" name="cpf" id="cpf" placeholder="Número de CPF" value={CPF} onInput={(e) => { setCPF(e.target.value) }} />
+                type="text" name="cpf" id="cpf" placeholder="Número de CPF" value={CPF} 
+                onInput={(e) => {VerificasaoCPF(e.target.value)}} required maxLength={15}/>
 
-              <label htmlFor="contato">Contato</label>
+              <label htmlFor="contato">Contato*</label>
               <div className="grid grid-cols-[auto_1fr] gap-2.5">
                 <select name="" id="" onChange={(e) => FormaContato(e.target.value)}
                   className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold">
@@ -323,7 +337,7 @@ export default function Formulario() {
                   <option value={"email"}>Email</option>
                 </select>
                 <input type="tel" name="contato" id="contato" onInput={(e) => { SelecaoContato(e.target.type, e.target.value) }}
-                  placeholder="Número de telefone" maxLength={20}
+                  placeholder="Número de telefone" maxLength={20} required
                   className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold" />
               </div>
 
