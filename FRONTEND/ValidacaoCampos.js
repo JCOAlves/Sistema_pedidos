@@ -47,5 +47,3 @@ export function validarCPF(cpf){
         return true;
     } // Compara o CPF informado pelo CPF calculado
 }
-
-validarCPF("CPF Aqui");

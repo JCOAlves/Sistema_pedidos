@@ -87,6 +87,7 @@ export default function Formulario() {
     const CPFValido = validarCPF(CPF);
     if(CPFValido){
       setCPF(CPF);
+      setMensagem("");
     } else{
       setCPF(CPF);
       setMensagem("CPF invalido");
@@ -99,11 +100,13 @@ export default function Formulario() {
         document.getElementById("contato").type = "tel";
         document.getElementById("contato").placeholder = "Número de telefone";
         document.getElementById("contato").maxLegth = 20;
+        document.getElementById("contato").value = telefone;
         break;
       case "email":
         document.getElementById("contato").type = "email";
         document.getElementById("contato").placeholder = "Endereço de email";
         document.getElementById("contato").maxLegth = 100;
+        document.getElementById("contato").value = email;
         break;
     }
   }
@@ -127,10 +130,22 @@ export default function Formulario() {
       return;
     }
 
+    if (nomeCliente === "" || CPF === "" || (email === "" && telefone === "")){
+      setMensagem("Adicione seus dados de identificação e contato");
+      return;
+    }
+
     setCarregando(true);
 
     try {
-      const dados = await POST('/pedidos', {
+      //Envio dos dados do cliente
+      const dadosCliente = await POST("/", {
+        nomeCliente, CPF, email, telefone
+      });
+      console.log("Resposta do cadastro do cliente:", dadosCliente);
+      
+      //Envio dos dados do pedido
+      const dadosPedido = await POST('/pedidos', {
         praViagem,
         observacoes,
         itens: itensCarrinho.map(i => ({
@@ -138,18 +153,18 @@ export default function Formulario() {
           quantidade: i.quantidade
         }))
       });
+      console.log("Resposta do pedido:", dadosPedido);
 
-      console.log("Resposta do pedido:", dados);
-
-      if (dados.success) {
+      if (dadosPedido.success && dadosCliente.success) {
         setMensagem(`Pedido #${dados.data.id} criado com sucesso!`);
         setItensCarrinho([]);
         setObservacoes("");
         setPraViagem(true);
         window.scrollTo(0, 0);
       } else {
-        setMensagem(`${dados.message || "Erro ao criar pedido"}`);
+        setMensagem(`${dadosPedido.message || dadosCliente.mensagem || "Erro ao criar pedido"}`);
       }
+
     } catch (error) {
       setMensagem("Erro de conexão com o servidor");
       console.error(error);
@@ -319,17 +334,17 @@ export default function Formulario() {
 
             {/* Formulário */}
             <form onSubmit={enviarPedido} className="">
-              <span className="text-[12px]">*Campo obrigatorio</span> <br /><br /> {/*<br/> são temporarios*/}
-              <label htmlFor="nome">Nome*</label>
+              <div className="text-[13px] text-red-500 mb-3">*Campo obrigatorio</div>
+              <label htmlFor="nome">Nome <span className="text-red-500">*</span></label>
               <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
                 type="text" name="nome" id="nome" placeholder="Nome do cliente" value={nomeCliente} onInput={(e) => setNome(e.target.value)} required maxLength={100}/>
 
-              <label htmlFor="cpf">CPF*</label>
+              <label htmlFor="cpf">CPF <span className="text-red-500">*</span></label>
               <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
                 type="text" name="cpf" id="cpf" placeholder="Número de CPF" value={CPF} 
                 onInput={(e) => {VerificasaoCPF(e.target.value)}} required maxLength={15}/>
 
-              <label htmlFor="contato">Contato*</label>
+              <label htmlFor="contato">Contato <span className="text-red-500">*</span></label>
               <div className="grid grid-cols-[auto_1fr] gap-2.5">
                 <select name="" id="" onChange={(e) => FormaContato(e.target.value)}
                   className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold">

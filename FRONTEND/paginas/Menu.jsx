@@ -81,7 +81,7 @@ export default function Menu() {
           : (
             <div className="grid grid-cols-1 gap-12">
               {listaItens.length != 0 || todosItens.length != 0 ?
-                listaItens.map((iten, index) => (<Item key={index} nome={iten["NomeItem"]} preco={iten["Preco"]} ingredientes={iten["Ingredientes"]} />))
+                listaItens.map((iten, index) => (<Item key={index} nome={iten["NomeItem"]} preco={iten["Preco"].toFixed(2)} ingredientes={iten["Ingredientes"]} />))
                 : <div className="text-center text-gray-400 py-8">
                   <p>Itens do menu indisponíveis</p>
                 </div>}

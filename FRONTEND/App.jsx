@@ -5,6 +5,7 @@ import Menu from "./paginas/Menu.jsx"
 import Pedidos from "./paginas/Pedidos.jsx" 
 import Login from "./paginas/Login.jsx"
 import ERRO from "./paginas/ERRO.jsx"
+import ItemEdicao from "./paginas/EdicaoItem.jsx"
 import Footer from "./componentes/Footer.jsx"
 
 function VerificacaoLogin({logado, children}){
@@ -26,7 +27,7 @@ function App() {
           <Route path="/menu" element={<Menu/>} /> 
           <Route path="/form/pedido" element={<Formulario />} />
           <Route path="/pedidos" element={<Pedidos />} />
-          <Route path="/pedidos/:id" element={<Pedidos />}/>
+          <Route path="/pedidos/:id" element={<ItemEdicao/>}/>
           <Route path="/form/funcionario" element={<h1>Formulario de funcionario</h1>}/>
           <Route path="/funcionarios" element={<h1>Funcionarios</h1>}/>
           <Route path="/funcionarios/:id" element={<h1>Funcionario especifico</h1>}/>

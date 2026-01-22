@@ -152,6 +152,8 @@ exports.criar = async (req, res) => {
       );
     }
 
+    //Adicionar dados na tabela cliente_pedido - Ass.: Júlio
+
     res.status(201).json({
       success: true,
       message: 'Pedido criado com sucesso',
