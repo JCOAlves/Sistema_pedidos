@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { GET } from "../MetodosHTTP";
+import BarraNavegacao from "../componentes/Navegacao";
 
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
@@ -61,8 +62,9 @@ export default function Pedidos() {
     return data.toLocaleString("pt-BR");
   };
 
-  return (
-    <div className="p-6 max-w-6xl mx-auto">
+  return (<>
+    <BarraNavegacao>Pedidos</BarraNavegacao>
+    <div className="p-6 max-w-6xl mr-auto ml-auto mb-0 mt-23">
       <h1 className="text-3xl font-bold text-white mb-6">Meus Pedidos</h1>
 
       {erro && (
@@ -222,5 +224,5 @@ export default function Pedidos() {
         </>
       )}
     </div>
-  );
+  </>);
 }

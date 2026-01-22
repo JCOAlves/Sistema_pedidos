@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { POST, GET } from "../MetodosHTTP";
+import BarraNavegacao from "../componentes/Navegacao.jsx";
+import {validarCPF} from "../ValidacaoCampos.js"
 
 export default function Formulario() {
   const [itensDisponiveis, setItensDisponiveis] = useState([]);
   const [itensCarrinho, setItensCarrinho] = useState([]);
-  const [praViagem, setPraViagem] = useState(true);
+  const [nomeCliente, setNome] = useState("");
+  const [CPF, setCPF] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
+  const [praViagem, setPraViagem] = useState(false);
   const [observacoes, setObservacoes] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [carregando, setCarregando] = useState(false);
@@ -20,7 +26,7 @@ export default function Formulario() {
       setCarregandoItens(true);
       const dados = await GET('/itens');
       console.log("Resposta da API:", dados);
-      
+
       if (dados.success && Array.isArray(dados.data)) {
         setItensDisponiveis(dados.data);
       } else if (Array.isArray(dados)) {
@@ -41,9 +47,9 @@ export default function Formulario() {
     const id = item.ID_item || item.id;
     const nome = item.NomeItem || item.nome;
     const preco = item.Preco || item.preco || 0;
-    
+
     const itemExistente = itensCarrinho.find(i => i.id_item === id);
-    
+
     if (itemExistente) {
       setItensCarrinho(itensCarrinho.map(i =>
         i.id_item === id
@@ -76,6 +82,46 @@ export default function Formulario() {
     }
   }
 
+  //Ajustar função
+  function VerificasaoCPF(CPF){
+    const CPFValido = validarCPF(CPF);
+    if(CPFValido){
+      setCPF(CPF);
+      setMensagem("");
+    } else{
+      setCPF(CPF);
+      setMensagem("CPF invalido");
+    }
+  }
+
+  function FormaContato(tipoContato) {
+    switch (tipoContato) {
+      case "tel":
+        document.getElementById("contato").type = "tel";
+        document.getElementById("contato").placeholder = "Número de telefone";
+        document.getElementById("contato").maxLegth = 20;
+        document.getElementById("contato").value = telefone;
+        break;
+      case "email":
+        document.getElementById("contato").type = "email";
+        document.getElementById("contato").placeholder = "Endereço de email";
+        document.getElementById("contato").maxLegth = 100;
+        document.getElementById("contato").value = email;
+        break;
+    }
+  }
+
+  function SelecaoContato(tipoContato, valor) {
+    switch (tipoContato) {
+      case "tel":
+        setTelefone(valor);
+        break;
+      case "email":
+        setEmail(valor);
+        break;
+    }
+  }
+
   async function enviarPedido(e) {
     e.preventDefault();
 
@@ -84,10 +130,22 @@ export default function Formulario() {
       return;
     }
 
+    if (nomeCliente === "" || CPF === "" || (email === "" && telefone === "")){
+      setMensagem("Adicione seus dados de identificação e contato");
+      return;
+    }
+
     setCarregando(true);
 
     try {
-      const dados = await POST('/pedidos', {
+      //Envio dos dados do cliente
+      const dadosCliente = await POST("/", {
+        nomeCliente, CPF, email, telefone
+      });
+      console.log("Resposta do cadastro do cliente:", dadosCliente);
+      
+      //Envio dos dados do pedido
+      const dadosPedido = await POST('/pedidos', {
         praViagem,
         observacoes,
         itens: itensCarrinho.map(i => ({
@@ -95,18 +153,18 @@ export default function Formulario() {
           quantidade: i.quantidade
         }))
       });
+      console.log("Resposta do pedido:", dadosPedido);
 
-      console.log("Resposta do pedido:", dados);
-
-      if (dados.success) {
+      if (dadosPedido.success && dadosCliente.success) {
         setMensagem(`Pedido #${dados.data.id} criado com sucesso!`);
         setItensCarrinho([]);
         setObservacoes("");
         setPraViagem(true);
         window.scrollTo(0, 0);
       } else {
-        setMensagem(`${dados.message || "Erro ao criar pedido"}`);
+        setMensagem(`${dadosPedido.message || dadosCliente.mensagem || "Erro ao criar pedido"}`);
       }
+
     } catch (error) {
       setMensagem("Erro de conexão com o servidor");
       console.error(error);
@@ -116,30 +174,32 @@ export default function Formulario() {
   }
 
   // Separar itens por tipo
-  const pratos = itensDisponiveis.filter(item => 
+  const pratos = itensDisponiveis.filter(item =>
     (item.TipoItem === 'Prato' || item.categoria === 'Lanches' || item.categoria === 'Pratos')
   );
-  
-  const bebidas = itensDisponiveis.filter(item => 
+
+  const bebidas = itensDisponiveis.filter(item =>
     (item.TipoItem === 'Bebida' || item.categoria === 'Bebidas')
   );
 
   const total = itensCarrinho.reduce((acc, i) => acc + (i.preco * i.quantidade), 0);
 
-  return (
-    <div className="p-6 max-w-6xl mx-auto">
+  return (<>
+    <BarraNavegacao>rgeyt</BarraNavegacao>
+    <div className="p-6 max-w-6xl mr-auto ml-auto mt-18 mb-10">
       {mensagem && (
-        <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${
-          mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
-        }`}>
+        <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
+      }`}>
           {mensagem}
         </div>
       )}
 
+      <h2 className="text-center font-serif text-4xl md:text-5xl text-white mt-2 uppercase tracking-wide">Fazer Pedido</h2>
+      <div className="w-24 h-1 bg-gold mx-auto mt-6"></div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Coluna esquerda: Menu */}
         <div className="lg:col-span-2 space-y-6">
-          <h1 className="text-3xl font-bold text-white">Fazer Pedido</h1>
 
           {carregandoItens ? (
             <div className="text-center text-gray-400 py-8">
@@ -273,22 +333,45 @@ export default function Formulario() {
             )}
 
             {/* Formulário */}
-            <form onSubmit={enviarPedido} className="space-y-3">
-              <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+            <form onSubmit={enviarPedido} className="">
+              <div className="text-[13px] text-red-500 mb-3">*Campo obrigatorio</div>
+              <label htmlFor="nome">Nome <span className="text-red-500">*</span></label>
+              <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
+                type="text" name="nome" id="nome" placeholder="Nome do cliente" value={nomeCliente} onInput={(e) => setNome(e.target.value)} required maxLength={100}/>
+
+              <label htmlFor="cpf">CPF <span className="text-red-500">*</span></label>
+              <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
+                type="text" name="cpf" id="cpf" placeholder="Número de CPF" value={CPF} 
+                onInput={(e) => {VerificasaoCPF(e.target.value)}} required maxLength={15}/>
+
+              <label htmlFor="contato">Contato <span className="text-red-500">*</span></label>
+              <div className="grid grid-cols-[auto_1fr] gap-2.5">
+                <select name="" id="" onChange={(e) => FormaContato(e.target.value)}
+                  className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold">
+                  <option value={"tel"}>Telefone</option>
+                  <option value={"email"}>Email</option>
+                </select>
+                <input type="tel" name="contato" id="contato" onInput={(e) => { SelecaoContato(e.target.type, e.target.value) }}
+                  placeholder="Número de telefone" maxLength={20} required
+                  className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold" />
+              </div>
+
+              <label className="flex items-center mt-1 mb-4 gap-2 text-gray-300 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={praViagem}
-                  onChange={(e) => setPraViagem(e.target.checked)}
-                  className="w-4 h-4 accent-gold cursor-pointer"
+                  onChange={() => setPraViagem(!praViagem)}
+                  className="w-4.5 h-4.5 accent-gold cursor-pointer"
                 />
-                <span className="text-sm">Para viagem</span>
+                <span className="text-[15px]">Para viagem</span>
               </label>
 
+              <label htmlFor="observacoes">Observações</label>
               <textarea
-                placeholder="Observações (ex: sem cebola, sem gelo)"
-                value={observacoes}
-                onChange={(e) => setObservacoes(e.target.value)}
-                className="w-full p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold text-sm"
+                placeholder="Ex: sem cebola, sem gelo."
+                value={observacoes} id="observacoes"
+                onInput={(e) => setObservacoes(e.target.value)}
+                className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold text-sm"
                 rows="3"
               />
 
@@ -304,5 +387,5 @@ export default function Formulario() {
         </div>
       </div>
     </div>
-  );
+  </>);
 } 
