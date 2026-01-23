@@ -15,6 +15,7 @@ export default function Formulario() {
   const [mensagem, setMensagem] = useState("");
   const [carregando, setCarregando] = useState(false);
   const [carregandoItens, setCarregandoItens] = useState(true);
+  const [pagamento, setPagamento] = useState("");
 
   // Carregar itens disponíveis ao montar componente
   useEffect(() => {
@@ -135,6 +136,11 @@ export default function Formulario() {
       return;
     }
 
+    if(pagamento === ""){
+      setMensagem("Selecione a forma de pagamento.");
+      return;
+    }
+
     setCarregando(true);
 
     try {
@@ -155,14 +161,17 @@ export default function Formulario() {
       });
       console.log("Resposta do pedido:", dadosPedido);
 
-      if (dadosPedido.success && dadosCliente.success) {
+      const dadosPagamento = await POST("", {pagamento});
+      console.log("Respota do cadastro de forma de pagamento:", dadosPagamento);
+
+      if (dadosPedido.success && dadosCliente.success && dadosPagamento.success) {
         setMensagem(`Pedido #${dados.data.id} criado com sucesso!`);
         setItensCarrinho([]);
         setObservacoes("");
         setPraViagem(true);
         window.scrollTo(0, 0);
       } else {
-        setMensagem(`${dadosPedido.message || dadosCliente.mensagem || "Erro ao criar pedido"}`);
+        setMensagem(`${dadosPedido.message || dadosCliente.message || dadosPagamento.message || "Erro ao criar pedido"}`);
       }
 
     } catch (error) {
@@ -374,6 +383,16 @@ export default function Formulario() {
                 className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold text-sm"
                 rows="3"
               />
+
+              <label htmlFor="pagamento">Forma de pagamento <span className="text-red-500">*</span></label>
+              <select name="" id="pagamento" onChange={(e) => {setPagamento(e.target.value)}} required
+                className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold">
+                <option value="" disabled selected>Selecione a forma de pagamento</option>
+                <option value="Pix">Pix</option>
+                <option value="Debito">Cartão de Debito</option>
+                <option value="Credito">Cartão de Crédito</option>
+                <option value="Dinheiro">Dinheiro em espécie</option>
+              </select>
 
               <button
                 type="submit"

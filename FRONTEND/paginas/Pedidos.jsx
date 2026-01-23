@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { GET } from "../MetodosHTTP";
-import BarraNavegacao from "../componentes/Navegacao";
+import { GET } from "../MetodosHTTP.js";
+import BarraNavegacao from "../componentes/Navegacao.jsx";
 
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
