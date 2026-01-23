@@ -2,6 +2,7 @@
 Sistema de pedidos de um restaurante, desenvolvido por [BrennoGithub](https://github.com/BrennoGithub), [ArielcsSilva](https://github.com/ArielcsSilva), [Fabiana020](https://github.com/Fabiana020), 
 [squaredmi](https://github.com/squaredmi) e [JCOAlves](https://github.com/JCOAlves), para a materia de *Banco de Dados*.
 
+## *Frameworks* utilizados
 O sistema utiliza os frameworks **Express JS** para o densenvolvimento *Backend* e o **React JS** para o *Frontend*.
 Além dos frameworks já citados, o projeto utiliza outras ferramentas como:
 
@@ -15,7 +16,8 @@ Além dos frameworks já citados, o projeto utiliza outras ferramentas como:
   - Tailwind CSS
   - API Fetch
 
-O projeto utiliza um banco de dados SQL físico para armazenar tabelas com dados da aplicação.
+## Banco de dados *SQL*
+O projeto utiliza um banco de dados MySQL físico para armazenar tabelas com dados da aplicação.
 
 ![Modelo logico do banco de dados do sistema de pedidos](Modelos_logico_BD.png)
 
@@ -30,5 +32,5 @@ O projeto utiliza um banco de dados SQL físico para armazenar tabelas com dados
 - **Cliente_pedido**: Relaciona pedidos aos clientes.
 - **Pagamentos**: Armazena dados dos pagamentos dos pedidos.
 
-Modelo Físico do banco SQL: []().
+Modelo Físico do banco SQL: [Sistema_restaurante.bd](../Sistema_pedidos/BACKEND/utills/sistema_restaurante_bd.sql).
 
