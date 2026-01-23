@@ -32,5 +32,5 @@ O projeto utiliza um banco de dados MySQL físico para armazenar tabelas com dad
 - **Cliente_pedido**: Relaciona pedidos aos clientes.
 - **Pagamentos**: Armazena dados dos pagamentos dos pedidos.
 
-Modelo Físico do banco SQL: [Sistema_restaurante.bd](Sistema_pedidos/BACKEND/utills/sistema_restaurante_bd.sql).
+Modelo Físico do banco SQL: [Sistema_restaurante.bd](BACKEND/utills/sistema_restaurante_bd.sql).
 
