@@ -28,7 +28,7 @@ export default function Pedidos() {
       } else {
         setErro("Erro ao carregar pedidos");
       }
-    } catch (erro) {
+    } catch (error) {
       console.error("Erro:", erro);
       setErro("Erro de conexão com o servidor");
     } finally {
@@ -45,7 +45,7 @@ export default function Pedidos() {
       } else {
         setErro("Erro ao carregar detalhes do pedido");
       }
-    } catch (erro) {
+    } catch (error) {
       console.error("Erro:", erro);
       setErro("Erro de conexão");
     }
@@ -68,7 +68,7 @@ export default function Pedidos() {
       <h1 className="text-3xl font-bold text-white mb-6">Meus Pedidos</h1>
 
       {erro && (
-        <div className="bg-red-600 text-white p-4 rounded mb-4">{erro}</div>
+        <div className="fixed top-4 right-4 z-50 bg-red-600 text-white font-semibold p-4 rounded mb-4">{erro}</div>
       )}
 
       {!pedidoSelecionado ? (

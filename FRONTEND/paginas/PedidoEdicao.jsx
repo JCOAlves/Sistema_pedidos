@@ -1,14 +1,16 @@
 import {useState, useEffect} from "react"
-import {useSearchParams} from "react-router-dom"
+import {useSearchParams, Navigate} from "react-router-dom"
 import BarraNavegacao from "../componentes/Navegacao.jsx";
 import {GET, PUT} from "../MetodosHTTP.js"
 
 //Página de edição de pedido
 function PedidoEdicao(){
-    const {id} = useSearchParams();
     const [listaItens, setItens] = useState([]);
     const [carregando, setCarregando] = useState(false);
     const [mensagem, setMensagem] = useState("");
+    
+    const {id} = useSearchParams();
+    if (id === undefined){ return <Navigate to={"/ERRO"}/> }
 
     useEffect(() => {
         async () => {
@@ -17,7 +19,7 @@ function PedidoEdicao(){
                 const itensPedido = await GET("/");
                 setItens(itensPedido.data);
 
-            } catch (erro){
+            } catch (error){
                 setMensagem("Pedido não disponivel.")
             } finally {
                 setCarregando(false);
@@ -31,7 +33,7 @@ function PedidoEdicao(){
             const pedidoEditado = await PUT("/", {});
             setMensagem("Pedido editado com sucesso.");
 
-        } catch (erro){
+        } catch (error){
             setMensagem("Erro na edição de pedido.");
         }
     }

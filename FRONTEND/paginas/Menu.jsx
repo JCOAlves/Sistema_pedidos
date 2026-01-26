@@ -28,15 +28,20 @@ export default function Menu() {
 
   // Carregar itens da API ao montar o componente
   useEffect(() => {
-    const carregarItens = async () => {
+    async function carregarItens() {
       try {
         setCarregando(true);
         const dados = await GET('/itens');
         if (Array.isArray(dados.data)) {
           setTodosItens(dados.data);
+        } else{
+          setMensagem("Erro ao carregar menu");
         }
+
       } catch (error) {
-        setMensagem("Erro na busca de itens.")
+        console.error(error);
+        setMensagem("Erro na busca de itens do menu:", dados);
+      
       } finally {
         setCarregando(false);
       }
@@ -60,6 +65,13 @@ export default function Menu() {
     <BarraNavegacao>Menu</BarraNavegacao>
     <section id="menu" className="py-24 bg-dark relative overflow-hidden mt-5">
       <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+
+      {mensagem && (
+        <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
+      }`}>
+          {mensagem}
+        </div>
+      )}
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         <div className="text-center mb-10">

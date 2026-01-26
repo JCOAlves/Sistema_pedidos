@@ -36,7 +36,7 @@ export default function Formulario() {
         console.error("Formato inesperado:", dados);
         setMensagem("Erro ao carregar itens");
       }
-    } catch (erro) {
+    } catch (error) {
       console.error("Erro ao carregar itens:", erro);
       setMensagem("Erro de conexão ao carregar itens");
     } finally {
@@ -194,7 +194,7 @@ export default function Formulario() {
   const total = itensCarrinho.reduce((acc, i) => acc + (i.preco * i.quantidade), 0);
 
   return (<>
-    <BarraNavegacao>rgeyt</BarraNavegacao>
+    <BarraNavegacao>Realizar pedido</BarraNavegacao>
     <div className="p-6 max-w-6xl mr-auto ml-auto mt-18 mb-10">
       {mensagem && (
         <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
