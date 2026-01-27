@@ -176,7 +176,7 @@ export default function GerenciamentoFuncionarios() {
 
                 <form onSubmit={salvarFuncionario} className="space-y-4">
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Nome *</label>
+                    <label className="block text-gold mb-2 font-bold">Nome <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={nome}
@@ -187,7 +187,7 @@ export default function GerenciamentoFuncionarios() {
                   </div>
 
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Cargo *</label>
+                    <label className="block text-gold mb-2 font-bold">Cargo <span className="text-red-500">*</span></label>
                     <select
                       value={cargo}
                       onChange={(e) => setCargo(e.target.value)}
@@ -215,7 +215,7 @@ export default function GerenciamentoFuncionarios() {
                   </div>
 
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Email</label>
+                    <label className="block text-gold mb-2 font-bold">Email <span className="text-red-500">*</span></label>
                     <input
                       type="email"
                       value={email}
