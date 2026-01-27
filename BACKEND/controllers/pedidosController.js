@@ -174,3 +174,160 @@ exports.criar = async (req, res) => {
     });
   }
 };
+
+/**
+ * Atualizar pedido
+ */
+exports.atualizar = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { praViagem, observacoes, itens } = req.body;
+
+    // Validar ID
+    if (!id || isNaN(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'ID do pedido inválido'
+      });
+    }
+
+    // Verificar se pedido existe
+    const pedidoExistente = await db.query(
+      'SELECT ID_pedido FROM pedidos WHERE ID_pedido = ?',
+      [id]
+    );
+
+    if (pedidoExistente.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Pedido não encontrado'
+      });
+    }
+
+    // Atualizar campos do pedido
+    const campos = [];
+    const valores = [];
+
+    if (praViagem !== undefined) {
+      campos.push('PraViagem = ?');
+      valores.push(praViagem ? 1 : 0);
+    }
+    if (observacoes !== undefined) {
+      campos.push('Observacoes = ?');
+      valores.push(observacoes);
+    }
+
+    if (campos.length > 0) {
+      valores.push(id);
+      await db.execute(
+        `UPDATE pedidos SET ${campos.join(', ')} WHERE ID_pedido = ?`,
+        valores
+      );
+    }
+
+    // Atualizar itens se fornecidos
+    if (Array.isArray(itens) && itens.length > 0) {
+      // Validar itens
+      for (const item of itens) {
+        if (!item.id_item || !item.quantidade || item.quantidade <= 0) {
+          return res.status(400).json({
+            success: false,
+            message: 'Cada item deve ter id_item (número) e quantidade (número > 0)'
+          });
+        }
+
+        const validarItem = await db.query(
+          'SELECT ID_item FROM itens WHERE ID_item = ?',
+          [item.id_item]
+        );
+
+        if (validarItem.length === 0) {
+          return res.status(400).json({
+            success: false,
+            message: `Item com ID ${item.id_item} não encontrado`
+          });
+        }
+      }
+
+      // Remover itens antigos
+      await db.execute(
+        'DELETE FROM pedido_item WHERE Pedido = ?',
+        [id]
+      );
+
+      // Inserir novos itens
+      for (const item of itens) {
+        await db.execute(
+          'INSERT INTO pedido_item (Item, Pedido, Quantidade) VALUES (?, ?, ?)',
+          [item.id_item, id, item.quantidade]
+        );
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Pedido atualizado com sucesso'
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar pedido:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erro ao atualizar pedido',
+      error: error.message
+    });
+  }
+};
+
+/**
+ * Deletar pedido e seus itens
+ */
+exports.deletar = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validar ID
+    if (!id || isNaN(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'ID do pedido inválido'
+      });
+    }
+
+    // Verificar se pedido existe
+    const pedidoExistente = await db.query(
+      'SELECT ID_pedido FROM pedidos WHERE ID_pedido = ?',
+      [id]
+    );
+
+    if (pedidoExistente.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Pedido não encontrado'
+      });
+    }
+
+    // Deletar itens do pedido
+    await db.execute(
+      'DELETE FROM pedido_item WHERE Pedido = ?',
+      [id]
+    );
+
+    // Deletar pedido
+    await db.execute(
+      'DELETE FROM pedidos WHERE ID_pedido = ?',
+      [id]
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Pedido deletado com sucesso'
+    });
+  } catch (error) {
+    console.error('Erro ao deletar pedido:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erro ao deletar pedido',
+      error: error.message
+    });
+  }
+};
