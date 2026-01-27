@@ -171,7 +171,7 @@ export default function GerenciamentoItens() {
 
                 <form onSubmit={salvarItem} className="space-y-4">
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Nome do Item *</label>
+                    <label className="block text-gold mb-2 font-bold">Nome do Item <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={nomeItem}
@@ -182,7 +182,7 @@ export default function GerenciamentoItens() {
                   </div>
 
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Tipo de Item *</label>
+                    <label className="block text-gold mb-2 font-bold">Tipo de Item <span className="text-red-500">*</span></label>
                     <select
                       value={tipoItem}
                       onChange={(e) => setTipoItem(e.target.value)}
@@ -197,7 +197,7 @@ export default function GerenciamentoItens() {
                   </div>
 
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Preço (R$) *</label>
+                    <label className="block text-gold mb-2 font-bold">Preço (R$) <span className="text-red-500">*</span></label>
                     <input
                       type="number"
                       step="0.01"

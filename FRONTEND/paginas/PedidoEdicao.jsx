@@ -10,7 +10,7 @@ function PedidoEdicao(){
     const [mensagem, setMensagem] = useState("");
     
     const {id} = useSearchParams();
-    if (id === undefined){ return <Navigate to={"/ERRO"}/> }
+    //if (id === undefined){ return <Navigate to={"/ERRO"}/> }
 
     useEffect(() => {
         async () => {

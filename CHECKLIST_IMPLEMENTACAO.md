@@ -13,15 +13,15 @@
 ## 📋 O que Você Precisa Fazer Agora
 
 ### **PASSO 1: Atualizar App.jsx** 
-[ ] Abra `FRONTEND/App.jsx`
-[ ] Adicione os imports:
+[x] Abra `FRONTEND/App.jsx`
+[x] Adicione os imports:
 ```javascript
 import GerenciamentoItens from './paginas/GerenciamentoItens';
 import GerenciamentoClientes from './paginas/GerenciamentoClientes';
 import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios';
 ```
 
-[ ] Adicione as rotas no `<Routes>`:
+[x] Adicione as rotas no `<Routes>`:
 ```javascript
 <Route path="/gerenciamento/itens" element={<GerenciamentoItens />} />
 <Route path="/gerenciamento/clientes" element={<GerenciamentoClientes />} />

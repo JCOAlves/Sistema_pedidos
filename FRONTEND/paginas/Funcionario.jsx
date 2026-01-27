@@ -11,8 +11,8 @@ function Funcionario() {
     const [nomeFuncionario, setNome] = useState("Fulano");
     const [cargoFuncionario, setCargo] = useState("Cozinheiro");
     const navigate = useNavigate();
-    const { id } = useSearchParams();
-    //if (id === undefined){ return <Navigate to={"/ERRO"}/> }
+    const { id_funcionario } = useSearchParams();
+    //if (id_funcionario === undefined){ return <Navigate to={"/ERRO"}/> }
 
     useEffect(() => {
         async () => {

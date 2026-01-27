@@ -8,6 +8,10 @@ html {
     background: linear-gradient(to bottom, rgba(15, 17, 21, 0.3), rgba(15, 17, 21, 0.9));
 }
 
+.body{
+    background-color: black;
+}
+
 /*Estilos da página Menu*/
 .botao_tipoIten{
     padding: 4px 6px;
