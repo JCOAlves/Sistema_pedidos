@@ -137,7 +137,7 @@ export default function GerenciamentoItens() {
     <>
       <BarraNavegacao>Gerenciamento de Itens</BarraNavegacao>
       <div className="min-h-screen bg-dark p-6 mt-20">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto mt-10">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-4xl font-bold text-gold">Gerenciamento de Itens</h1>
             <button

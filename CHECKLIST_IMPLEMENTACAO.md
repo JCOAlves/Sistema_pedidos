@@ -29,14 +29,14 @@ import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios';
 ```
 
 ### **PASSO 2: Testar o Backend**
-[ ] Abra terminal na pasta BACKEND
-[ ] Execute: `npm start`
-[ ] Verifique se está rodando em http://localhost:3000
+[x] Abra terminal na pasta BACKEND
+[x] Execute: `npm start`
+[x] Verifique se está rodando em http://localhost:3000
 
 ### **PASSO 3: Testar o Frontend**
-[ ] Abra terminal na pasta FRONTEND
-[ ] Execute: `npm run dev`
-[ ] Abra http://localhost:5173 no navegador
+[x] Abra terminal na pasta FRONTEND
+[x] Execute: `npm run dev`
+[x] Abra http://localhost:5173 no navegador
 
 ### **PASSO 4: Testar Funcionalidades**
 

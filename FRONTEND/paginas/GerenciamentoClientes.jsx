@@ -167,7 +167,7 @@ export default function GerenciamentoClientes() {
     <>
       <BarraNavegacao>Gerenciamento de Clientes</BarraNavegacao>
       <div className="min-h-screen bg-dark p-6 mt-20">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto mt-10">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-4xl font-bold text-gold">Gerenciamento de Clientes</h1>
             <button
@@ -220,7 +220,7 @@ export default function GerenciamentoClientes() {
             )}
           </div>
 
-          {/* Formulário Modal */}
+          {/* Formulário Modal */} {/*Formulario desnecessario.*/}
           {mostraFormulario && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
               <div className="bg-dark border border-gold p-8 rounded max-w-md w-full max-h-screen overflow-y-auto">
