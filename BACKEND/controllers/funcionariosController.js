@@ -5,7 +5,7 @@ const db = require('../utills/db');
  */
 exports.listar = async (req, res) => {
   try {
-    const funcionarios = await db.query('SELECT * FROM funcionarios ORDER BY Nome');
+    const funcionarios = await db.query('SELECT * FROM funcionarios ORDER BY NomeFuncionario');
     
     res.status(200).json({
       success: true,
@@ -40,7 +40,7 @@ exports.criar = async (req, res) => {
 
     // Inserir funcionário
     const resultado = await db.execute(
-      'INSERT INTO funcionarios (Nome, Cargo, Telefone, Email, CPF) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO funcionarios (NomeFuncionario, Cargo, Telefone, EmailFuncionario, CPF) VALUES (?, ?, ?, ?, ?)',
       [nome, cargo, telefone || '', email || '', cpf || '']
     );
 
@@ -142,7 +142,7 @@ exports.atualizar = async (req, res) => {
     const valores = [];
 
     if (nome !== undefined) {
-      campos.push('Nome = ?');
+      campos.push('NomeFuncionario = ?');
       valores.push(nome);
     }
     if (cargo !== undefined) {
@@ -154,7 +154,7 @@ exports.atualizar = async (req, res) => {
       valores.push(telefone);
     }
     if (email !== undefined) {
-      campos.push('Email = ?');
+      campos.push('EmailFuncionario = ?');
       valores.push(email);
     }
     if (cpf !== undefined) {

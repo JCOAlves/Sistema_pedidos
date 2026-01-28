@@ -5,7 +5,7 @@ const db = require('../utills/db');
  */
 exports.listar = async (req, res) => {
   try {
-    const clientes = await db.query('SELECT * FROM clientes ORDER BY Nome');
+    const clientes = await db.query('SELECT * FROM clientes ORDER BY NomeCliente');
     
     res.status(200).json({
       success: true,
@@ -34,26 +34,26 @@ exports.criar = async (req, res) => {
     if (!nome || !cpf) {
       return res.status(400).json({
         success: false,
-        message: 'Dados incompletos. Envie: nome, cpf'
+        message: 'Dados incompletos. Envie: NomeCliente, cpf'
       });
     }
 
-    // Verificar se CPF já existe
+    // Verificar se CPF já possui um nome cadastrado
     const cpfExistente = await db.query(
-      'SELECT ID_cliente FROM clientes WHERE CPF = ?',
-      [cpf]
+      'SELECT ID_cliente FROM clientes WHERE cpf = ? AND NomeCliente = ?',
+      [cpf, nome] // Verica se o CPF já está relacionado ao nome de um cliente
     );
 
     if (cpfExistente.length > 0) {
       return res.status(400).json({
         success: false,
-        message: 'CPF já cadastrado'
+        message: 'CPF já cadastrado com nome de um usuário'
       });
     }
 
     // Inserir cliente
     const resultado = await db.execute(
-      'INSERT INTO clientes (Nome, CPF, Telefone, Email, Endereco) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO clientes (NomeCliente, CPF, NumeroTelefone, EnderecoEmail, Endereco) VALUES (?, ?, ?, ?, ?)',
       [nome, cpf, telefone || '', email || '', endereco || '']
     );
 
@@ -173,7 +173,7 @@ exports.atualizar = async (req, res) => {
     const valores = [];
 
     if (nome !== undefined) {
-      campos.push('Nome = ?');
+      campos.push('NomeCliente = ?');
       valores.push(nome);
     }
     if (cpf !== undefined) {
@@ -181,11 +181,11 @@ exports.atualizar = async (req, res) => {
       valores.push(cpf);
     }
     if (telefone !== undefined) {
-      campos.push('Telefone = ?');
+      campos.push('NumeroTelefone = ?');
       valores.push(telefone);
     }
     if (email !== undefined) {
-      campos.push('Email = ?');
+      campos.push('EnderecoEmail = ?');
       valores.push(email);
     }
     if (endereco !== undefined) {
