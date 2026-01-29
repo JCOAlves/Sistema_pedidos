@@ -9,8 +9,8 @@ function Logout(){
         try{
             const confirmacaoLogout = confirm("Deseja prosseguir com o logout?");
             if(confirmacaoLogout){
-                const respostaLogout = await POST("/", { logout: true });
-                if(respostaLogout){
+                const respostaLogout = await POST("/funcionarios/logout", { executarLogout: true });
+                if(respostaLogout.logout === true){
                     navigate("/login");
                 } else {
                     console.error("Erro no processo de deslogue.");

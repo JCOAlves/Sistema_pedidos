@@ -18,9 +18,9 @@ function Login() {
         try {
             if (emailFuncionario != "" && senhaFuncionario != "") {
                 const dadosLogin = { emailFuncionario: emailFuncionario, senhaFuncionario: senhaFuncionario };
-                const resposta = await POST("/", dadosLogin);
-                const { loginValido } = resposta;
-                if (loginValido === undefined || loginValido === false) {
+                const resposta = await POST("/funcionarios/login", dadosLogin);
+                const { login, data } = resposta;
+                if (login === undefined || login === false) {
                     setTentativa(numeroTentativas+1);
                     if (numeroTentativas === 3) {
                         const novoTempo = tempoLogin*60;
@@ -33,7 +33,7 @@ function Login() {
                     }
 
                 } else {
-                    navigate("/");
+                    navigate(`/gerenciamento/${data.ID_funcionario}`);
                 }
 
             } else {

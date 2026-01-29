@@ -17,9 +17,9 @@ import Footer from "./componentes/Footer.jsx"
 function VerificacaoLogin({ children }) {
     async () => {
         try {
-            const resposta = await GET("/");
-            const { logado=false } = resposta;
-            if (logado != undefined && logado === true) {
+            const resposta = await GET("/funcionarios/checkLogin");
+            const { funcionarioLogado } = resposta;
+            if (funcionarioLogado != undefined && funcionarioLogado === true) {
                 return children
             }
             else {
@@ -49,7 +49,7 @@ function App() {
                     <Route path="/gerenciamento/pedidos" element={<Pedidos />} />
                     <Route path="/gerenciamento/pedidos/:id" element={<PedidoEdicao />} />
                     <Route path="/gerenciamento/pagamentos" element={<Pagamentos/>}/>
-                    <Route path="/gerenciamento/pagamentos/:id" element={<h1>Página de pagamento</h1>}/>
+                    <Route path="/gerenciamento/pagamentos/:id" element={<h1>Página de pagamento por ID</h1>}/>
                     <Route path="/NEGADO" element={<ERRO mensagem={<h1>Você não possui autorização para acessar essa página. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="/ERRO" element={<ERRO mensagem={<h1>Página não encontrada. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="*" element={<Navigate to="/ERRO" />} />

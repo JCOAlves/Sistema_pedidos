@@ -49,16 +49,16 @@ import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios';
 - [ ] Delete um item (clique em "Deletar")
 
 **Para Clientes:**
-- [ ] Acesse http://localhost:5173/gerenciamento/clientes
-- [ ] Teste criar um novo cliente
+- [x] Acesse http://localhost:5173/gerenciamento/clientes
+- [x] Teste criar um novo cliente
 - [ ] Teste buscar por ID
 - [ ] Teste buscar por CPF
 - [ ] Teste editar e deletar
 
 **Para Funcionários:**
-- [ ] Acesse http://localhost:5173/gerenciamento/funcionarios
-- [ ] Teste criar novo funcionário
-- [ ] Teste selecionar cargo na lista
+- [x] Acesse http://localhost:5173/gerenciamento/funcionarios
+- [x] Teste criar novo funcionário
+- [x] Teste selecionar cargo na lista
 - [ ] Teste editar e deletar
 
 ---
