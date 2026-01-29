@@ -1,12 +1,23 @@
 const express = require("express");
+const session = require('express-session'); // Session usada nas funções de login e logout
 const cors = require("cors");
 
 const app = express();
- 
+
 app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
+// Configuração do middleware de sessão
+app.use(session({
+    name: 'sistemaRestaurante', // Nome do cookie
+    secret: 'iuertergurtuuyiuryurtireurterut', // Essencial para assinar o cookie
+    resave: true, // Salva a sessão mesmo se não modificada. Melhor prática: false
+    saveUninitialized: true, // Salva sessão para usuários não logados. Melhor prática: false para conformidade com LGPD
+    cookie: { secure: false } // Defina como true se usar HTTPS
 }));
  
 app.use(express.json());

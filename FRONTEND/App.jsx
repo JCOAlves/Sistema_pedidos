@@ -50,7 +50,8 @@ function App() {
                     <Route path="/gerenciamento/pedidos/:id" element={<PedidoEdicao />} />
                     <Route path="/gerenciamento/pagamentos" element={<Pagamentos/>}/>
                     <Route path="/gerenciamento/pagamentos/:id" element={<h1>Página de pagamento</h1>}/>
-                    <Route path="/ERRO" element={<ERRO mensagem={<h1>Página não encontrada. <br /> Volte para a página inicial</h1>} />} />
+                    <Route path="/NEGADO" element={<ERRO mensagem={<h1>Você não possui autorização para acessar essa página. <br /> Volte para a página inicial.</h1>} />} />
+                    <Route path="/ERRO" element={<ERRO mensagem={<h1>Página não encontrada. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="*" element={<Navigate to="/ERRO" />} />
                 </Routes>
             </BrowserRouter>
