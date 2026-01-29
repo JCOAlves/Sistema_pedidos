@@ -72,3 +72,12 @@ textarea{
     min-height: 120px;
     max-height: 200px;
 }
+
+/*Estilo página de funcionario*/
+.paginaFuncionario{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 90%;
+    max-width: 400px;
+}

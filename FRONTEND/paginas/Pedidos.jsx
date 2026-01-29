@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { GET } from "../MetodosHTTP.js";
 import BarraNavegacao from "../componentes/Navegacao.jsx";
+import Logout from "../componentes/Logout.jsx";
 
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
@@ -63,7 +64,10 @@ export default function Pedidos() {
   };
 
   return (<>
-    <BarraNavegacao>Pedidos</BarraNavegacao>
+    <BarraNavegacao>
+      <div>Pedidos</div>
+      <Logout/>
+    </BarraNavegacao>
     <div className="p-6 max-w-6xl mr-auto ml-auto mb-0 mt-23">
       <h1 className="text-3xl font-bold text-white mb-6">Meus Pedidos</h1>
 
