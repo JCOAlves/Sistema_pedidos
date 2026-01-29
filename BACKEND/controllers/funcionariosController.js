@@ -279,10 +279,16 @@ exports.login = async (req, res) => {
 exports.checkLogin = async (req, res) => {
   try{
     if(req.session.NomeFuncionario && req.session.EmailFuncionario && req.session.CargoFuncionario){
+      const dados = await db.query(
+        'SELECT * FROM funcionarios WHERE NomeFuncionario = ? AND EmailFuncionario = ? AND CargoFuncionario = ?', 
+        [req.session.NomeFuncionario, req.session.EmailFuncionario, req.session.CargoFuncionario]
+      )
+
       return res.status(200).json({
         success: true,
         funcionarioLogado: true,
-        message: 'O funcionario está logado no sistema.'
+        message: 'O funcionario está logado no sistema.',
+        data: dados[0]
       });
 
     } else{
@@ -319,6 +325,7 @@ exports.logout = async (req, res) => {
         }
         res.clearCookie('sistemaRestaurante'); // Limpa o cookie da sessão
   
+        console.log("Sessão do funcionário finalizada.");
         return res.status(200).json({
             success: true,
             logout: true,
