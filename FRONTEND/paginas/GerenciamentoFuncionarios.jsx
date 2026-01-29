@@ -14,9 +14,9 @@ export default function GerenciamentoFuncionarios() {
   // Form states
   const [nome, setNome] = useState("");
   const [cargo, setCargo] = useState("");
-  const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
+  const [senhaSistema, setSenha] = useState("");
+  const [ID_restaurante, setRestaurante] = useState(0);
 
   // Carregar funcionários ao montar componente
   useEffect(() => {
@@ -26,10 +26,13 @@ export default function GerenciamentoFuncionarios() {
   async function carregarFuncionarios() {
     try {
       setCarregando(true);
+      const restaurante = await GET('/restaurantes');
       const dados = await GET('/funcionarios');
       
-      if (dados.success && Array.isArray(dados.data)) {
+      if (dados.success && restaurante.success && Array.isArray(dados.data)) {
         setFuncionarios(dados.data);
+        setRestaurante(restaurante.data.ID_restaurante);
+       
       } else if (Array.isArray(dados)) {
         setFuncionarios(dados);
       }
@@ -61,18 +64,16 @@ export default function GerenciamentoFuncionarios() {
   function limparFormulario() {
     setNome("");
     setCargo("");
-    setTelefone("");
     setEmail("");
-    setCpf("");
+    setSenha("");
   }
 
   function editarFuncionario(func) {
     setEditando(func.ID_funcionario);
     setNome(func.Nome);
     setCargo(func.Cargo);
-    setTelefone(func.Telefone);
+    setSenha(func.Senha);
     setEmail(func.Email);
-    setCpf(func.CPF);
     setMostraFormulario(true);
   }
 
@@ -91,17 +92,16 @@ export default function GerenciamentoFuncionarios() {
         resposta = await PUT(`/funcionarios/${editando}`, {
           nome,
           cargo,
-          telefone,
-          email,
-          cpf
+          senhaSistema,
+          email
         });
       } else {
         resposta = await POST('/funcionarios', {
           nome,
           cargo,
-          telefone,
+          senhaSistema,
           email,
-          cpf
+          ID_restaurante
         });
       }
 
@@ -183,7 +183,7 @@ export default function GerenciamentoFuncionarios() {
                     <label className="block text-gold mb-2 font-bold">Nome <span className="text-red-500">*</span></label>
                     <input
                       type="text"
-                      value={nome}
+                      value={nome} required
                       onChange={(e) => setNome(e.target.value)}
                       placeholder="Ex: Maria Silva"
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
@@ -194,35 +194,21 @@ export default function GerenciamentoFuncionarios() {
                     <label className="block text-gold mb-2 font-bold">Cargo <span className="text-red-500">*</span></label>
                     <select
                       value={cargo}
-                      onChange={(e) => setCargo(e.target.value)}
+                      onChange={(e) => setCargo(e.target.value)} required
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
                     >
                       <option value="">Selecione um cargo</option>
                       <option value="Gerente">Gerente</option>
-                      <option value="Chef">Chef</option>
                       <option value="Cozinheiro">Cozinheiro</option>
-                      <option value="Atendente">Atendente</option>
-                      <option value="Entregador">Entregador</option>
-                      <option value="Gerente de Cozinha">Gerente de Cozinha</option>
+                      <option value="Garcom">Garçom</option>
                     </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-gold mb-2 font-bold">Telefone</label>
-                    <input
-                      type="tel"
-                      value={telefone}
-                      onChange={(e) => setTelefone(e.target.value)}
-                      placeholder="Ex: (11) 99999-9999"
-                      className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
-                    />
                   </div>
 
                   <div>
                     <label className="block text-gold mb-2 font-bold">Email <span className="text-red-500">*</span></label>
                     <input
                       type="email"
-                      value={email}
+                      value={email} required
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Ex: maria@restaurant.com"
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
@@ -230,15 +216,16 @@ export default function GerenciamentoFuncionarios() {
                   </div>
 
                   <div>
-                    <label className="block text-gold mb-2 font-bold">CPF</label>
+                    <label className="block text-gold mb-2 font-bold">Senha sistema <span className="text-red-500">*</span></label>
                     <input
-                      type="text"
-                      value={cpf}
-                      onChange={(e) => setCpf(e.target.value)}
-                      placeholder="Ex: 123.456.789-00"
+                      type="password"
+                      value={senhaSistema} minLength={8} required
+                      onChange={(e) => setSenha(e.target.value)}
+                      placeholder="Minimo 8 caracteres"
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
                     />
                   </div>
+                  <input type="hidden" name="ID_restaurante" value={ID_restaurante} />
 
                   <div className="flex gap-4 mt-6">
                     <button
@@ -277,9 +264,7 @@ export default function GerenciamentoFuncionarios() {
                     <th className="text-left p-4 text-gold font-bold">ID</th>
                     <th className="text-left p-4 text-gold font-bold">Nome</th>
                     <th className="text-left p-4 text-gold font-bold">Cargo</th>
-                    <th className="text-left p-4 text-gold font-bold">Telefone</th>
                     <th className="text-left p-4 text-gold font-bold">Email</th>
-                    <th className="text-left p-4 text-gold font-bold">CPF</th>
                     <th className="text-center p-4 text-gold font-bold">Ações</th>
                   </tr>
                 </thead>
@@ -287,11 +272,9 @@ export default function GerenciamentoFuncionarios() {
                   {funcionarios.map((func) => (
                     <tr key={func.ID_funcionario} className="border-b border-gold/10 hover:bg-darker/50 transition">
                       <td className="p-4 text-gold font-bold">{func.ID_funcionario}</td>
-                      <td className="p-4 text-white">{func.Nome}</td>
-                      <td className="p-4 text-gray-300">{func.Cargo}</td>
-                      <td className="p-4 text-gray-300">{func.Telefone || "-"}</td>
-                      <td className="p-4 text-gray-300 text-sm truncate">{func.Email || "-"}</td>
-                      <td className="p-4 text-gray-300">{func.CPF || "-"}</td>
+                      <td className="p-4 text-white">{func.NomeFuncionario}</td>
+                      <td className="p-4 text-gray-300">{func.CargoFuncionario}</td>
+                      <td className="p-4 text-gray-300 text-sm truncate">{func.EmailFuncionario || "-"}</td>
                       <td className="p-4 text-center space-x-2">
                         <button
                           onClick={() => editarFuncionario(func)}

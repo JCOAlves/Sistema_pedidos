@@ -6,8 +6,8 @@ import {validarCPF} from "../ValidacaoCampos.js"
 export default function Formulario() {
   const [itensDisponiveis, setItensDisponiveis] = useState([]);
   const [itensCarrinho, setItensCarrinho] = useState([]);
-  const [nomeCliente, setNome] = useState("");
-  const [CPF, setCPF] = useState("");
+  const [nome, setNome] = useState("");
+  const [cpf, setCPF] = useState("");
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
   const [praViagem, setPraViagem] = useState(false);
@@ -131,7 +131,7 @@ export default function Formulario() {
       return;
     }
 
-    if (nomeCliente === "" || CPF === "" || (email === "" && telefone === "")){
+    if (nome === "" || cpf === "" || (email === "" && telefone === "")){
       setMensagem("Adicione seus dados de identificação e contato");
       return;
     }
@@ -145,8 +145,8 @@ export default function Formulario() {
 
     try {
       //Envio dos dados do cliente
-      const dadosCliente = await POST("/", {
-        nomeCliente, CPF, email, telefone
+      const dadosCliente = await POST("/clientes", {
+        nome, cpf, email, telefone
       });
       console.log("Resposta do cadastro do cliente:", dadosCliente);
       
@@ -346,11 +346,11 @@ export default function Formulario() {
               <div className="text-[13px] text-red-500 mb-3">*Campo obrigatorio</div>
               <label htmlFor="nome">Nome <span className="text-red-500">*</span></label>
               <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
-                type="text" name="nome" id="nome" placeholder="Nome do cliente" value={nomeCliente} onInput={(e) => setNome(e.target.value)} required maxLength={100}/>
+                type="text" name="nome" id="nome" placeholder="Nome do cliente" value={nome} onInput={(e) => setNome(e.target.value)} required maxLength={100}/>
 
               <label htmlFor="cpf">CPF <span className="text-red-500">*</span></label>
               <input className="w-full mt-2 mb-4 p-3 rounded bg-darker text-white border border-gray-700 focus:outline-none focus:border-gold"
-                type="text" name="cpf" id="cpf" placeholder="Número de CPF" value={CPF} 
+                type="text" name="cpf" id="cpf" placeholder="Número de CPF" value={cpf} 
                 onInput={(e) => {VerificasaoCPF(e.target.value)}} required maxLength={15}/>
 
               <label htmlFor="contato">Contato <span className="text-red-500">*</span></label>

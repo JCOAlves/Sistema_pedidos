@@ -28,7 +28,7 @@ exports.listar = async (req, res) => {
  */
 exports.criar = async (req, res) => {
   try {
-    const { nome, cpf, telefone, email, endereco } = req.body;
+    const { nome, cpf, telefone, email } = req.body;
 
     // Validar dados obrigatórios
     if (!nome || !cpf) {
@@ -53,8 +53,8 @@ exports.criar = async (req, res) => {
 
     // Inserir cliente
     const resultado = await db.execute(
-      'INSERT INTO clientes (NomeCliente, CPF, NumeroTelefone, EnderecoEmail, Endereco) VALUES (?, ?, ?, ?, ?)',
-      [nome, cpf, telefone || '', email || '', endereco || '']
+      'INSERT INTO clientes (NomeCliente, CPF, NumeroTelefone, EnderecoEmail) VALUES (?, ?, ?, ?)',
+      [nome, cpf, telefone || '', email || '']
     );
 
     res.status(201).json({
@@ -65,8 +65,7 @@ exports.criar = async (req, res) => {
         nome,
         cpf,
         telefone: telefone || '',
-        email: email || '',
-        endereco: endereco || ''
+        email: email || ''
       }
     });
   } catch (error) {

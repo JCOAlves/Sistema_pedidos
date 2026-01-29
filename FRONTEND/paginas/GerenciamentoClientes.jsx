@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { GET, POST, PUT, DELETE } from "../MetodosHTTP";
-import BarraNavegacao from "../componentes/Navegacao";
+import { GET, POST, PUT, DELETE } from "../MetodosHTTP.js";
+import BarraNavegacao from "../componentes/Navegacao.jsx";
 import Logout from "../componentes/Logout.jsx"
 
 export default function GerenciamentoClientes() {
@@ -17,7 +17,6 @@ export default function GerenciamentoClientes() {
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
-  const [endereco, setEndereco] = useState("");
 
   // Carregar clientes ao montar componente
   useEffect(() => {
@@ -64,7 +63,6 @@ export default function GerenciamentoClientes() {
     setCpf("");
     setTelefone("");
     setEmail("");
-    setEndereco("");
   }
 
   function editarCliente(cliente) {
@@ -73,7 +71,6 @@ export default function GerenciamentoClientes() {
     setCpf(cliente.CPF);
     setTelefone(cliente.Telefone);
     setEmail(cliente.Email);
-    setEndereco(cliente.Endereco);
     setMostraFormulario(true);
   }
 
@@ -93,16 +90,14 @@ export default function GerenciamentoClientes() {
           nome,
           cpf,
           telefone,
-          email,
-          endereco
+          email
         });
       } else {
         resposta = await POST('/clientes', {
           nome,
           cpf,
           telefone,
-          email,
-          endereco
+          email
         });
       }
 
@@ -224,7 +219,7 @@ export default function GerenciamentoClientes() {
             )}
           </div>
 
-          {/* Formulário Modal */} {/*Formulario desnecessario.*/}
+          {/* Formulário Modal */}
           {mostraFormulario && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
               <div className="bg-dark border border-gold p-8 rounded max-w-md w-full max-h-screen overflow-y-auto">
@@ -234,7 +229,7 @@ export default function GerenciamentoClientes() {
 
                 <form onSubmit={salvarCliente} className="space-y-4">
                   <div>
-                    <label className="block text-gold mb-2 font-bold">Nome *</label>
+                    <label className="block text-gold mb-2 font-bold">Nome <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={nome}
@@ -245,7 +240,7 @@ export default function GerenciamentoClientes() {
                   </div>
 
                   <div>
-                    <label className="block text-gold mb-2 font-bold">CPF *</label>
+                    <label className="block text-gold mb-2 font-bold">CPF <span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       value={cpf}
@@ -273,17 +268,6 @@ export default function GerenciamentoClientes() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Ex: joao@email.com"
-                      className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gold mb-2 font-bold">Endereço</label>
-                    <input
-                      type="text"
-                      value={endereco}
-                      onChange={(e) => setEndereco(e.target.value)}
-                      placeholder="Ex: Rua A, 123"
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
                     />
                   </div>
@@ -327,7 +311,6 @@ export default function GerenciamentoClientes() {
                     <th className="text-left p-4 text-gold font-bold">CPF</th>
                     <th className="text-left p-4 text-gold font-bold">Telefone</th>
                     <th className="text-left p-4 text-gold font-bold">Email</th>
-                    <th className="text-left p-4 text-gold font-bold">Endereço</th>
                     <th className="text-center p-4 text-gold font-bold">Ações</th>
                   </tr>
                 </thead>
@@ -335,11 +318,10 @@ export default function GerenciamentoClientes() {
                   {clientes.map((cliente) => (
                     <tr key={cliente.ID_cliente} className="border-b border-gold/10 hover:bg-darker/50 transition">
                       <td className="p-4 text-gold font-bold">{cliente.ID_cliente}</td>
-                      <td className="p-4 text-white">{cliente.Nome}</td>
-                      <td className="p-4 text-gray-300">{cliente.CPF}</td>
-                      <td className="p-4 text-gray-300">{cliente.Telefone || "-"}</td>
-                      <td className="p-4 text-gray-300 text-sm truncate">{cliente.Email || "-"}</td>
-                      <td className="p-4 text-gray-400 text-sm max-w-xs truncate">{cliente.Endereco || "-"}</td>
+                      <td className="p-4 text-white">{cliente.NomeCliente}</td>
+                      <td className="p-4 text-gray-300">{cliente.cpf}</td>
+                      <td className="p-4 text-gray-300">{cliente.NumeroTelefone || "-"}</td>
+                      <td className="p-4 text-gray-300 text-sm truncate">{cliente.EnderecoEmail || "-"}</td>
                       <td className="p-4 text-center space-x-2">
                         <button
                           onClick={() => editarCliente(cliente)}

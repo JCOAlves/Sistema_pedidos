@@ -28,7 +28,7 @@ exports.listar = async (req, res) => {
  */
 exports.criar = async (req, res) => {
   try {
-    const { nome, cargo, telefone, email, cpf } = req.body;
+    const { nome, cargo, senhaSistema, email, ID_restaurante } = req.body;
 
     // Validar dados obrigatórios
     if (!nome || !cargo) {
@@ -40,8 +40,8 @@ exports.criar = async (req, res) => {
 
     // Inserir funcionário
     const resultado = await db.execute(
-      'INSERT INTO funcionarios (NomeFuncionario, Cargo, Telefone, EmailFuncionario, CPF) VALUES (?, ?, ?, ?, ?)',
-      [nome, cargo, telefone || '', email || '', cpf || '']
+      'INSERT INTO funcionarios (NomeFuncionario, CargoFuncionario, EmailFuncionario, SenhaSistema_funcionario, Restaurante) VALUES (?, ?, ?, ?, ?)',
+      [nome, cargo, email || '', senhaSistema || '', ID_restaurante]
     );
 
     res.status(201).json({
@@ -51,11 +51,10 @@ exports.criar = async (req, res) => {
         id: resultado.insertId,
         nome,
         cargo,
-        telefone: telefone || '',
-        email: email || '',
-        cpf: cpf || ''
+        email: email || ''
       }
     });
+
   } catch (error) {
     console.error('Erro ao criar funcionário:', error);
     res.status(500).json({
@@ -114,7 +113,7 @@ exports.buscarPorId = async (req, res) => {
 exports.atualizar = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nome, cargo, telefone, email, cpf } = req.body;
+    const { nome, cargo, senhaSistema, email} = req.body;
 
     // Validar ID
     if (!id || isNaN(id)) {
@@ -149,17 +148,13 @@ exports.atualizar = async (req, res) => {
       campos.push('Cargo = ?');
       valores.push(cargo);
     }
-    if (telefone !== undefined) {
-      campos.push('Telefone = ?');
-      valores.push(telefone);
-    }
     if (email !== undefined) {
       campos.push('EmailFuncionario = ?');
       valores.push(email);
     }
-    if (cpf !== undefined) {
-      campos.push('CPF = ?');
-      valores.push(cpf);
+    if (senhaSistema !== undefined) {
+      campos.push('SenhaSistema_funcionario = ?');
+      valores.push(senhaSistema);
     }
 
     if (campos.length === 0) {
