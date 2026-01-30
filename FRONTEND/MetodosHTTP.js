@@ -6,7 +6,7 @@ const API_BASE_URL = 'http://localhost:3000/api';
 export async function GET(rota){ 
     try { 
         const urlCompleta = rota.startsWith('http') ? rota : `${API_BASE_URL}${rota}`;
-        let resposta = await fetch(urlCompleta);
+        let resposta = await fetch(urlCompleta, {credentials: 'include'}); // Permite que o navegador pegue cookies de sessão
         const dados = await resposta.json();
         if("mensagemServidor" in dados){
             return dados["mensagemServidor"];
@@ -15,8 +15,8 @@ export async function GET(rota){
         }
 
     } catch (error) {
-        console.error(`Erro na busca de dados: ${erro.message || erro}`);
-        return `Erro na busca de dados: ${erro.message || erro}`;
+        console.error(`Erro na busca de dados: ${error.message || error}`);
+        return `Erro na busca de dados: ${error.message || error}`;
     }
 };
 
@@ -28,14 +28,15 @@ export async function POST(rota, objeto) {
         let resposta = await fetch(urlCompleta, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: objetoJSON
+            body: objetoJSON,
+            credentials: 'include' // Permite que o navegador envie cookies de sessão
         });
         resposta = await resposta.json();
         return resposta;
     }
     catch (error) {
-        console.error(`Erro no envio de dados: ${erro.message || erro}`);
-        return `Erro no envio de dados: ${erro.message || erro}`;
+        console.error(`Erro no envio de dados: ${error.message || error}`);
+        return `Erro no envio de dados: ${error.message || error}`;
     }
 };
 
@@ -47,14 +48,15 @@ export async function PUT(rotaEspecifica, objeto) {
         let resposta = await fetch(urlCompleta, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: objetoJSON
+            body: objetoJSON,
+            credentials: 'include' // Permite que o navegador envie cookies de sessão
         });
         resposta = await resposta.json();
         return resposta;
     }
     catch(error){
-        console.error(`Erro na atualização de dados: ${erro.message || erro}`);
-        return `Erro na atualização de dados: ${erro.message || erro}`;
+        console.error(`Erro na atualização de dados: ${error.message || error}`);
+        return `Erro na atualização de dados: ${error.message || error}`;
     }
 };
 
@@ -64,13 +66,14 @@ export async function DELETE(rotaEspecifica) {
         const urlCompleta = rotaEspecifica.startsWith('http') ? rotaEspecifica : `${API_BASE_URL}${rotaEspecifica}`;
         let resposta = await fetch(urlCompleta, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include' // Permite que o navegador envie cookies de sessão
         });
         resposta = await resposta.json();
         return resposta;
     }
     catch(error){
-        console.error(`Erro na excluição de dados: ${erro.message || erro}`);
-        return `Erro na excluição de dados: ${erro.message || erro}`;
+        console.error(`Erro na excluição de dados: ${error.message || error}`);
+        return `Erro na excluição de dados: ${error.message || error}`;
     }
 };
