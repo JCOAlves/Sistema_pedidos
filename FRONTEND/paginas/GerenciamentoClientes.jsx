@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { GET, POST, PUT, DELETE } from "../MetodosHTTP.js";
-import BarraNavegacao from "../componentes/Navegacao.jsx";
 import Logout from "../componentes/Logout.jsx"
 
 export default function GerenciamentoClientes() {
@@ -161,10 +160,6 @@ export default function GerenciamentoClientes() {
 
   return (
     <>
-      <BarraNavegacao>
-        <div>Clientes</div>
-        <Logout/>
-      </BarraNavegacao>
       <div className="min-h-screen bg-dark p-6 mt-20">
         <div className="max-w-6xl mx-auto mt-10">
           <div className="flex justify-between items-center mb-8">

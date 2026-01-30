@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { POST } from "../MetodosHTTP.js"
-import BarraNavegacao from "../componentes/Navegacao.jsx";
 
 //Página de Login do sistema do restaurante
 function Login({setLogado}) {
@@ -49,7 +48,6 @@ function Login({setLogado}) {
     }
 
     return (<div className="min-h-155">
-        <BarraNavegacao>Login</BarraNavegacao>
 
         {mensagem && (
             <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
