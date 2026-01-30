@@ -15,8 +15,8 @@ app.use(cors({
 app.use(session({
     name: 'sistemaRestaurante', // Nome do cookie
     secret: 'iuertergurtuuyiuryurtireurterut', // Essencial para assinar o cookie
-    resave: true, // Salva a sessão mesmo se não modificada. Melhor prática: false
-    saveUninitialized: true, // Salva sessão para usuários não logados. Melhor prática: false para conformidade com LGPD
+    resave: false, // Salva a sessão mesmo se não modificada. Melhor prática: false
+    saveUninitialized: false, // Salva sessão para usuários não logados. Melhor prática: false para conformidade com LGPD
     cookie: { secure: false } // Defina como true se usar HTTPS
 }));
  

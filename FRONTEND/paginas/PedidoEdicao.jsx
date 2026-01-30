@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react"
 import {useSearchParams, Navigate} from "react-router-dom"
-import BarraNavegacao from "../componentes/Navegacao.jsx";
 import {GET, PUT} from "../MetodosHTTP.js"
 
 //Página de edição de pedido
@@ -39,7 +38,6 @@ function PedidoEdicao(){
     }
 
     return (<>
-        <BarraNavegacao>Edição de pedido</BarraNavegacao>
         <form className="w-100 rounded mr-auto ml-auto mt-30 mb-20 p-7 border border-gray-700">
             {!carregando && mensagem ? null : mensagem}
 

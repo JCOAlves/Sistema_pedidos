@@ -1,5 +1,4 @@
 import Item from "../componentes/Itens.jsx";
-import BarraNavegacao from "../componentes/Navegacao.jsx"
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { GET } from "../MetodosHTTP.js"
@@ -62,7 +61,6 @@ export default function Menu() {
 
 
   return (<>
-    <BarraNavegacao>Menu</BarraNavegacao>
     <section id="menu" className="py-24 bg-dark relative overflow-hidden mt-5">
       <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
 

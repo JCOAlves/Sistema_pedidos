@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import BarraNavegacao from "../componentes/Navegacao.jsx";
 import { GET } from "../MetodosHTTP.js";
 
 //Página para a visualização dos pagamentos dos pedidos
@@ -20,7 +19,6 @@ function Pagamentos() {
     }, []);
 
     return (<>
-        <BarraNavegacao>Pagamentos</BarraNavegacao>
         {mensagem && (
             <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
                 }`}>

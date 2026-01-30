@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
 import { useSearchParams, useNavigate, Link } from "react-router-dom"
-import BarraNavegacao from "../componentes/Navegacao.jsx"
-import Logout from "../componentes/Logout.jsx"
 import { GET } from "../MetodosHTTP.js"
 
 
@@ -31,9 +29,6 @@ function Funcionario() {
     }, [id_funcionario])
 
     return (<>
-        <BarraNavegacao>
-            <Logout/>
-        </BarraNavegacao>
         {mensagem && (
             <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
                 }`}>

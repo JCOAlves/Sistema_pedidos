@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom"
 import {POST} from "../MetodosHTTP.js"
 
 //Função de logout
-function Logout(){
+function Logout({setLogado}){
     const navigate = useNavigate();
 
     async function Deslogar(){
@@ -11,6 +11,7 @@ function Logout(){
             if(confirmacaoLogout){
                 const respostaLogout = await POST("/funcionarios/logout", { executarLogout: true });
                 if(respostaLogout.logout === true){
+                    setLogado(false);
                     navigate("/login");
                 } else {
                     console.error("Erro no processo de deslogue.");

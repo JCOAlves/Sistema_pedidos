@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { POST, GET } from "../MetodosHTTP";
-import BarraNavegacao from "../componentes/Navegacao.jsx";
 import {validarCPF} from "../ValidacaoCampos.js"
 
 export default function Formulario() {
@@ -194,7 +193,6 @@ export default function Formulario() {
   const total = itensCarrinho.reduce((acc, i) => acc + (i.preco * i.quantidade), 0);
 
   return (<>
-    <BarraNavegacao>Realizar pedido</BarraNavegacao>
     <div className="p-6 max-w-6xl mr-auto ml-auto mt-18 mb-10">
       {mensagem && (
         <div className={`fixed top-4 right-4 px-4 py-3 rounded text-white font-semibold z-50 ${mensagem.includes('sucesso') ? 'bg-green-600' : 'bg-red-600'
