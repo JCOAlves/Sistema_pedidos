@@ -175,7 +175,7 @@ Resultado Esperado: Mensagem "Preencha todos os campos obrigatórios"
 ## 📊 Status de Implementação
 
 ```
-BACKEND (100% ✅)
+BACKEND (95% ✅ - falta adicionar o CRUD de pagamentos)
 ├── Routes/
 │   ├── Route_Itens.js ✅
 │   ├── Route_Clientes.js ✅
