@@ -168,7 +168,7 @@ export default function ListaItens() {
       const dados = await GET('/itens');
       setItens(dados.data || dados);
       setCarregando(false);
-    } catch (erro) {
+    } catch (error) {
       console.error('Erro ao carregar itens:', erro);
       setCarregando(false);
     }

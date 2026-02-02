@@ -32,7 +32,7 @@ export default function GerenciamentoClientes() {
       } else if (Array.isArray(dados)) {
         setClientes(dados);
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao carregar clientes", "erro");
     } finally {
       setCarregando(false);
@@ -110,7 +110,7 @@ export default function GerenciamentoClientes() {
       } else {
         exibirMensagem(resposta.message || "Erro ao salvar cliente", "erro");
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao salvar cliente", "erro");
     }
   }
@@ -129,7 +129,7 @@ export default function GerenciamentoClientes() {
       } else {
         exibirMensagem(resposta.message || "Erro ao deletar cliente", "erro");
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao deletar cliente", "erro");
     }
   }
@@ -151,7 +151,7 @@ export default function GerenciamentoClientes() {
         exibirMensagem(dados.message || "Cliente não encontrado", "erro");
         setClientes([]);
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao buscar cliente", "erro");
     } finally {
       setCarregando(false);

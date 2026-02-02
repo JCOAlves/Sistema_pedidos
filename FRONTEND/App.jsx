@@ -9,9 +9,9 @@ import Login from "./paginas/Login.jsx"
 import ERRO from "./paginas/ERRO.jsx"
 import PedidoEdicao from "./paginas/PedidoEdicao.jsx"
 import Funcionario from "./paginas/Funcionario.jsx"
-import GerenciamentoItens from './paginas/GerenciamentoItens';
-import GerenciamentoClientes from './paginas/GerenciamentoClientes';
-import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios';
+import GerenciamentoItens from './paginas/GerenciamentoItens.jsx';
+import GerenciamentoClientes from './paginas/GerenciamentoClientes.jsx';
+import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios.jsx';
 import Pagamentos from "./paginas/Pagamentos.jsx"
 import Footer from "./componentes/Footer.jsx"
 import BarraNavegacao from "./componentes/Navegacao.jsx"
@@ -20,6 +20,7 @@ import Logout from "./componentes/Logout.jsx"
 
 function App() {
     const [logado, setLogado] = useState(false);
+    const [usuario, setUsuario] = useState(null);
     const [carregando, setCarregando] = useState(false);
     const location = useLocation();
     const [Pagina, setPagina] = useState("");
@@ -76,8 +77,14 @@ function App() {
         async function BuscarSessao() {
             try {
                 const resposta = await GET("/funcionarios/verificacaoLogin");
-                const { funcionarioLogado } = resposta;
-                funcionarioLogado === true ? setLogado(true) : setLogado(false)
+                const { funcionarioLogado, data } = resposta;
+                if(funcionarioLogado){
+                    setLogado(true);
+                    setUsuario(data);
+                } else{
+                    setLogado(false);
+                    setUsuario(null);
+                }
 
             } catch (error) {
                 console.error("Erro na verificação de usuário logado na sessão.")
@@ -92,14 +99,15 @@ function App() {
     return (
         <>
             <BarraNavegacao>
-                {Pagina} {typeof Pagina === 'string' && location.pathname.includes("/gerenciamento") ? <Logout/> : null}
+                {Pagina} {typeof Pagina === 'string' && location.pathname.includes("/gerenciamento") ? 
+                    <Logout setLogado={setLogado} setUsuario={setUsuario}/> : null}
             </BarraNavegacao>
                 <Routes>
                     <Route path="/" element={<Inicial />} />
-                    <Route path="/login" element={<Login setLogado={setLogado}/>} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/form/pedido" element={<Formulario />} />
-                    <Route path="/gerenciamento/:id_funcionario" element={<Funcionario />} />
+                    <Route path="/login" element={<Login setLogado={setLogado}/>} />
+                    <Route path="/gerenciamento/:id_funcionario" element={<Funcionario dadosUsuario={usuario}/>} />
                     <Route path="/gerenciamento/itens" element={<GerenciamentoItens />} />
                     <Route path="/gerenciamento/clientes" element={<GerenciamentoClientes />} />
                     <Route path="/gerenciamento/funcionarios" element={<GerenciamentoFuncionarios />} />

@@ -1,31 +1,25 @@
 import { useState, useEffect } from "react"
-import { useSearchParams, useNavigate, Link } from "react-router-dom"
-import { GET } from "../MetodosHTTP.js"
+import { useSearchParams, useNavigate, Navigate, Link } from "react-router-dom"
 
 
 //Página de usuário do funcionario
-function Funcionario() {
+function Funcionario({dadosUsuario}) {
     const [mensagem, setMensagem] = useState("");
     const [nomeFuncionario, setNome] = useState("Fulano");
     const [cargoFuncionario, setCargo] = useState("Cozinheiro");
     const navigate = useNavigate();
     const { id_funcionario } = useSearchParams();
-    //if (id_funcionario === undefined){ return <Navigate to={"/ERRO"}/> }
+    if (id_funcionario === undefined){ return <Navigate to={"/ERRO"}/> }
 
     useEffect(() => {
-        async () => {
-            try {
-                const funcionario = await GET("/");
-                const { nomeFuncionario, funcao } = funcionario;
-                if (nomeFuncionario === undefined && funcao === undefined) {
-                    setMensagem("Erro no carregamento de dados do usuário");
-                }
-
-            } catch (error) {
-                console.error("Erro no carregamento de dados do usuário")
-                setMensagem("Erro no carregamento de dados do usuário");
-            }
+        const { NomeFuncionario, CargoFuncionario } = dadosUsuario;
+        if(NomeFuncionario != undefined && CargoFuncionario != undefined){
+            setNome(NomeFuncionario);
+            setCargo(CargoFuncionario);
+        } else{
+            navigate("/login");
         }
+
     }, [id_funcionario])
 
     return (<>

@@ -31,7 +31,7 @@ export default function GerenciamentoItens() {
       } else if (Array.isArray(dados)) {
         setItens(dados);
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao carregar itens", "erro");
     } finally {
       setCarregando(false);
@@ -109,7 +109,7 @@ export default function GerenciamentoItens() {
       } else {
         exibirMensagem(resposta.message || "Erro ao salvar item", "erro");
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao salvar item", "erro");
     }
   }
@@ -128,7 +128,7 @@ export default function GerenciamentoItens() {
       } else {
         exibirMensagem(resposta.message || "Erro ao deletar item", "erro");
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao deletar item", "erro");
     }
   }

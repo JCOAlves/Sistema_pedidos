@@ -34,7 +34,7 @@ export default function GerenciamentoFuncionarios() {
       } else if (Array.isArray(dados)) {
         setFuncionarios(dados);
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao carregar funcionários", "erro");
     } finally {
       setCarregando(false);
@@ -68,10 +68,10 @@ export default function GerenciamentoFuncionarios() {
 
   function editarFuncionario(func) {
     setEditando(func.ID_funcionario);
-    setNome(func.Nome);
-    setCargo(func.Cargo);
-    setSenha(func.Senha);
-    setEmail(func.Email);
+    setNome(func.NomeFuncionario);
+    setCargo(func.CargoFuncionario);
+    setSenha(func.SenhaSistema_funcionario);
+    setEmail(func.EmailFuncionario);
     setMostraFormulario(true);
   }
 
@@ -113,7 +113,7 @@ export default function GerenciamentoFuncionarios() {
       } else {
         exibirMensagem(resposta.message || "Erro ao salvar funcionário", "erro");
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao salvar funcionário", "erro");
     }
   }
@@ -132,7 +132,7 @@ export default function GerenciamentoFuncionarios() {
       } else {
         exibirMensagem(resposta.message || "Erro ao deletar funcionário", "erro");
       }
-    } catch (erro) {
+    } catch (error) {
       exibirMensagem("Erro ao deletar funcionário", "erro");
     }
   }
