@@ -75,6 +75,7 @@ function App() {
     
     useEffect(() => {
         async function BuscarSessao() {
+            setCarregando(true);
             try {
                 const resposta = await GET("/funcionarios/verificacaoLogin");
                 const { funcionarioLogado, data } = resposta;
@@ -88,13 +89,15 @@ function App() {
 
             } catch (error) {
                 console.error("Erro na verificação de usuário logado na sessão.")
+            } finally{
+                setCarregando(false);
             }
         }
 
-        setCarregando(true);
+        
         BuscarSessao();
-        setCarregando(false);
-    }, []);
+        
+    }, [logado]);
 
     return (
         <>
