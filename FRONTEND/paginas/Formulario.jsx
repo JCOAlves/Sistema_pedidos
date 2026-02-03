@@ -160,14 +160,27 @@ export default function Formulario() {
       });
       console.log("Resposta do pedido:", dadosPedido);
 
-      const dadosPagamento = await POST("", {pagamento});
-      console.log("Respota do cadastro de forma de pagamento:", dadosPagamento);
+      // Criar pagamento com dados do pedido e valor total
+      const dadosPagamento = dadosPedido.success && dadosPedido.data
+        ? await POST("/pagamentos", {
+            pedido: dadosPedido.data.id,
+            valorPago: total,
+            formaPagamento: pagamento
+          })
+        : { success: false, message: "Erro ao obter ID do pedido" };
+      
+      console.log("Resposta do cadastro de pagamento:", dadosPagamento);
 
       if (dadosPedido.success && dadosCliente.success && dadosPagamento.success) {
-        setMensagem(`Pedido #${dados.data.id} criado com sucesso!`);
+        setMensagem(`Pedido #${dadosPedido.data.id} criado com sucesso! Pagamento registrado.`);
         setItensCarrinho([]);
         setObservacoes("");
-        setPraViagem(true);
+        setPraViagem(false);
+        setNome("");
+        setCPF("");
+        setTelefone("");
+        setEmail("");
+        setPagamento("");
         window.scrollTo(0, 0);
       } else {
         setMensagem(`${dadosPedido.message || dadosCliente.message || dadosPagamento.message || "Erro ao criar pedido"}`);
