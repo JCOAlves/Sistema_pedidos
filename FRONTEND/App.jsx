@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { GET } from "./MetodosHTTP.js"
 import Inicial from "./paginas/Inicial.jsx"
@@ -9,9 +9,9 @@ import Login from "./paginas/Login.jsx"
 import ERRO from "./paginas/ERRO.jsx"
 import PedidoEdicao from "./paginas/PedidoEdicao.jsx"
 import Funcionario from "./paginas/Funcionario.jsx"
-import GerenciamentoItens from './paginas/GerenciamentoItens';
-import GerenciamentoClientes from './paginas/GerenciamentoClientes';
-import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios';
+import GerenciamentoItens from './paginas/GerenciamentoItens.jsx';
+import GerenciamentoClientes from './paginas/GerenciamentoClientes.jsx';
+import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios.jsx';
 import Pagamentos from "./paginas/Pagamentos.jsx"
 import Footer from "./componentes/Footer.jsx"
 import BarraNavegacao from "./componentes/Navegacao.jsx"
@@ -20,9 +20,11 @@ import Logout from "./componentes/Logout.jsx"
 
 function App() {
     const [logado, setLogado] = useState(false);
+    const [usuario, setUsuario] = useState(null);
     const [carregando, setCarregando] = useState(false);
     const location = useLocation();
     const [Pagina, setPagina] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const nomePagina = location.pathname;
@@ -67,46 +69,58 @@ function App() {
                 return children
         
             } else {
-                return <Navigate to={"/login"}/>
+                navigate("/login");
+                return;
             }
         }
     }
     
     useEffect(() => {
         async function BuscarSessao() {
+            setCarregando(true);
             try {
                 const resposta = await GET("/funcionarios/verificacaoLogin");
-                const { funcionarioLogado } = resposta;
-                funcionarioLogado === true ? setLogado(true) : setLogado(false)
+                const { funcionarioLogado, data } = resposta;
+                if(funcionarioLogado){
+                    setLogado(true);
+                    setUsuario(data);
+                    console.log(data); // Ainda a ser trabalhado
+                    console.log(dadosUsuario);
+                } else{
+                    setLogado(false);
+                    setUsuario(null);
+                }
 
             } catch (error) {
                 console.error("Erro na verificação de usuário logado na sessão.")
+            } finally{
+                setCarregando(false);
             }
         }
 
-        setCarregando(true);
+        
         BuscarSessao();
-        setCarregando(false);
-    }, []);
+        
+    }, [logado]);
 
     return (
         <>
             <BarraNavegacao>
-                {Pagina} {typeof Pagina === 'string' && location.pathname.includes("/gerenciamento") ? <Logout/> : null}
+                {Pagina} {typeof Pagina === 'string' && location.pathname.includes("/gerenciamento") ? 
+                    <Logout setLogado={setLogado} setUsuario={setUsuario}/> : null}
             </BarraNavegacao>
                 <Routes>
                     <Route path="/" element={<Inicial />} />
-                    <Route path="/login" element={<Login setLogado={setLogado}/>} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/form/pedido" element={<Formulario />} />
-                    <Route path="/gerenciamento/:id_funcionario" element={<Funcionario />} />
-                    <Route path="/gerenciamento/itens" element={<GerenciamentoItens />} />
-                    <Route path="/gerenciamento/clientes" element={<GerenciamentoClientes />} />
-                    <Route path="/gerenciamento/funcionarios" element={<GerenciamentoFuncionarios />} />
+                    <Route path="/login" element={<Login setLogado={setLogado}/>} />
+                    <Route path="/gerenciamento/:id_funcionario" element={<VerificacaoLogin logado={logado} carregando={carregando}><Funcionario dadosUsuario={usuario}/> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/itens" element={<VerificacaoLogin logado={logado} carregando={carregando}> <GerenciamentoItens /> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/clientes" element={<VerificacaoLogin logado={logado} carregando={carregando}> <GerenciamentoClientes /> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/funcionarios" element={<VerificacaoLogin logado={logado} carregando={carregando}> <GerenciamentoFuncionarios /> </VerificacaoLogin>} />
                     <Route path="/gerenciamento/pedidos" element={<VerificacaoLogin logado={logado} carregando={carregando}><Pedidos /></VerificacaoLogin>} />
-                    <Route path="/gerenciamento/pedidos/:id" element={<PedidoEdicao />} />
-                    <Route path="/gerenciamento/pagamentos" element={<Pagamentos />} />
-                    <Route path="/gerenciamento/pagamentos/:id" element={<h1>Página de pagamento por ID</h1>} />
+                    <Route path="/gerenciamento/pedidos/:id" element={<VerificacaoLogin logado={logado} carregando={carregando}> <PedidoEdicao /> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/pagamentos" element={<VerificacaoLogin logado={logado} carregando={carregando}> <Pagamentos /> </VerificacaoLogin>} />
                     <Route path="/NEGADO" element={<ERRO mensagem={<h1>Você não possui autorização para acessar essa página. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="/ERRO" element={<ERRO mensagem={<h1>Página não encontrada. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="*" element={<Navigate to="/ERRO" />} />

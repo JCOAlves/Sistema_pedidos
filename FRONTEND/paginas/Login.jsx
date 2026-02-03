@@ -34,7 +34,8 @@ function Login({setLogado}) {
 
                 } else {
                     setLogado(true);
-                    navigate(`/gerenciamento/${data.ID_funcionario}`);
+                    const { ID_funcionario } = data;
+                    navigate(`/gerenciamento/${ID_funcionario}`);
                 }
 
             } else {

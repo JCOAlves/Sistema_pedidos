@@ -251,8 +251,9 @@ exports.login = async (req, res) => {
 
     } else{
       const [usuario] = buscaFuncionario;
-      const {NomeFuncionario, EmailFuncionario, CargoFuncionario} = usuario;
+      const {ID_funcionario, NomeFuncionario, EmailFuncionario, CargoFuncionario} = usuario;
 
+      req.session.ID_funcionario = ID_funcionario;
       req.session.NomeFuncionario = NomeFuncionario;
       req.session.EmailFuncionario = EmailFuncionario;
       req.session.CargoFuncionario = CargoFuncionario;
@@ -278,11 +279,12 @@ exports.login = async (req, res) => {
 
 exports.checkLogin = async (req, res) => {
   try{
-    if(req.session.NomeFuncionario && req.session.EmailFuncionario && req.session.CargoFuncionario){
+    if(req.session.ID_funcionario && req.session.NomeFuncionario && req.session.EmailFuncionario && req.session.CargoFuncionario){
       const dados = await db.query(
-        'SELECT * FROM funcionarios WHERE NomeFuncionario = ? AND EmailFuncionario = ? AND CargoFuncionario = ?', 
-        [req.session.NomeFuncionario, req.session.EmailFuncionario, req.session.CargoFuncionario]
+        'SELECT * FROM funcionarios WHERE ID_funcionario = ?', 
+        [req.session.ID_funcionario]
       )
+      console.log(dados)
 
       return res.status(200).json({
         success: true,
