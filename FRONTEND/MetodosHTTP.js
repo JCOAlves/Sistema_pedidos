@@ -8,11 +8,7 @@ export async function GET(rota){
         const urlCompleta = rota.startsWith('http') ? rota : `${API_BASE_URL}${rota}`;
         let resposta = await fetch(urlCompleta, {credentials: 'include'}); // Permite que o navegador pegue cookies de sessão
         const dados = await resposta.json();
-        if("mensagemServidor" in dados){
-            return dados["mensagemServidor"];
-        }else{
-            return dados;
-        }
+        return dados;
 
     } catch (error) {
         console.error(`Erro na busca de dados: ${error.message || error}`);

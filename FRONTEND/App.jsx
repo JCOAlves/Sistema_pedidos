@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { GET } from "./MetodosHTTP.js"
 import Inicial from "./paginas/Inicial.jsx"
@@ -24,6 +24,7 @@ function App() {
     const [carregando, setCarregando] = useState(false);
     const location = useLocation();
     const [Pagina, setPagina] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const nomePagina = location.pathname;
@@ -68,7 +69,8 @@ function App() {
                 return children
         
             } else {
-                return <Navigate to={"/login"}/>
+                navigate("/login");
+                return;
             }
         }
     }
@@ -82,6 +84,8 @@ function App() {
                 if(funcionarioLogado){
                     setLogado(true);
                     setUsuario(data);
+                    console.log(data);
+                    console.log(dadosUsuario);
                 } else{
                     setLogado(false);
                     setUsuario(null);

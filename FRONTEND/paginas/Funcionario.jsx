@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useSearchParams, useNavigate, Navigate, Link } from "react-router-dom"
+import { useParams, useNavigate, Navigate, Link } from "react-router-dom"
 
 
 //Página de usuário do funcionario
@@ -8,18 +8,15 @@ function Funcionario({dadosUsuario}) {
     const [nomeFuncionario, setNome] = useState("Fulano");
     const [cargoFuncionario, setCargo] = useState("Cozinheiro");
     const navigate = useNavigate();
-    const { id_funcionario } = useSearchParams();
+    const { id_funcionario } = useParams();
     if (id_funcionario === undefined){ return <Navigate to={"/ERRO"}/> }
 
     useEffect(() => {
-        const { NomeFuncionario, CargoFuncionario } = dadosUsuario;
-        if(NomeFuncionario != undefined && CargoFuncionario != undefined){
-            setNome(NomeFuncionario);
-            setCargo(CargoFuncionario);
-        } else{
-            navigate("/login");
+        if(dadosUsuario){
+            setNome(dadosUsuario.NomeFuncionario);
+            setCargo(dadosUsuario.CargoFuncionario);
         }
-
+        
     }, [id_funcionario])
 
     return (<>
