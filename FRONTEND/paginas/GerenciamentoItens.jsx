@@ -173,7 +173,7 @@ export default function GerenciamentoItens() {
                     <label className="block text-gold mb-2 font-bold">Nome do Item <span className="text-red-500">*</span></label>
                     <input
                       type="text"
-                      value={nomeItem}
+                      value={nomeItem} required
                       onChange={(e) => setNomeItem(e.target.value)}
                       placeholder="Ex: Pizza Margherita"
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
@@ -183,15 +183,13 @@ export default function GerenciamentoItens() {
                   <div>
                     <label className="block text-gold mb-2 font-bold">Tipo de Item <span className="text-red-500">*</span></label>
                     <select
-                      value={tipoItem}
+                      value={tipoItem} required
                       onChange={(e) => setTipoItem(e.target.value)}
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"
                     >
-                      <option value="">Selecione um tipo</option>
-                      <option value="Prato">Prato Principal</option>
+                      <option value="" disabled>Selecione um tipo</option>
+                      <option value="Prato">Prato</option>
                       <option value="Bebida">Bebida</option>
-                      <option value="Sobremesa">Sobremesa</option>
-                      <option value="Aperitivo">Aperitivo</option>
                     </select>
                   </div>
 
@@ -199,8 +197,8 @@ export default function GerenciamentoItens() {
                     <label className="block text-gold mb-2 font-bold">Preço (R$) <span className="text-red-500">*</span></label>
                     <input
                       type="number"
-                      step="0.01"
-                      value={preco}
+                      step="0.01" min={1}
+                      value={preco} required
                       onChange={(e) => setPreco(e.target.value)}
                       placeholder="Ex: 25.50"
                       className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400"

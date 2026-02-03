@@ -9,7 +9,8 @@ function Funcionario({dadosUsuario}) {
     const [cargoFuncionario, setCargo] = useState("Cozinheiro");
     const navigate = useNavigate();
     const { id_funcionario } = useParams();
-    if (id_funcionario === undefined){ return <Navigate to={"/ERRO"}/> }
+    if (id_funcionario === undefined || id_funcionario === null){ return <Navigate to={"/ERRO"}/> }
+    if(id_funcionario != dadosUsuario.ID_funcionario){ return <Navigate to={"/NEGADO"}/> }
 
     useEffect(() => {
         if(dadosUsuario){

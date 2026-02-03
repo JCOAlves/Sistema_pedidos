@@ -84,7 +84,7 @@ function App() {
                 if(funcionarioLogado){
                     setLogado(true);
                     setUsuario(data);
-                    console.log(data);
+                    console.log(data); // Ainda a ser trabalhado
                     console.log(dadosUsuario);
                 } else{
                     setLogado(false);
@@ -114,14 +114,13 @@ function App() {
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/form/pedido" element={<Formulario />} />
                     <Route path="/login" element={<Login setLogado={setLogado}/>} />
-                    <Route path="/gerenciamento/:id_funcionario" element={<Funcionario dadosUsuario={usuario}/>} />
-                    <Route path="/gerenciamento/itens" element={<GerenciamentoItens />} />
-                    <Route path="/gerenciamento/clientes" element={<GerenciamentoClientes />} />
-                    <Route path="/gerenciamento/funcionarios" element={<GerenciamentoFuncionarios />} />
+                    <Route path="/gerenciamento/:id_funcionario" element={<VerificacaoLogin logado={logado} carregando={carregando}><Funcionario dadosUsuario={usuario}/> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/itens" element={<VerificacaoLogin logado={logado} carregando={carregando}> <GerenciamentoItens /> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/clientes" element={<VerificacaoLogin logado={logado} carregando={carregando}> <GerenciamentoClientes /> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/funcionarios" element={<VerificacaoLogin logado={logado} carregando={carregando}> <GerenciamentoFuncionarios /> </VerificacaoLogin>} />
                     <Route path="/gerenciamento/pedidos" element={<VerificacaoLogin logado={logado} carregando={carregando}><Pedidos /></VerificacaoLogin>} />
-                    <Route path="/gerenciamento/pedidos/:id" element={<PedidoEdicao />} />
-                    <Route path="/gerenciamento/pagamentos" element={<Pagamentos />} />
-                    <Route path="/gerenciamento/pagamentos/:id" element={<h1>Página de pagamento por ID</h1>} />
+                    <Route path="/gerenciamento/pedidos/:id" element={<VerificacaoLogin logado={logado} carregando={carregando}> <PedidoEdicao /> </VerificacaoLogin>} />
+                    <Route path="/gerenciamento/pagamentos" element={<VerificacaoLogin logado={logado} carregando={carregando}> <Pagamentos /> </VerificacaoLogin>} />
                     <Route path="/NEGADO" element={<ERRO mensagem={<h1>Você não possui autorização para acessar essa página. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="/ERRO" element={<ERRO mensagem={<h1>Página não encontrada. <br /> Volte para a página inicial.</h1>} />} />
                     <Route path="*" element={<Navigate to="/ERRO" />} />
