@@ -69,7 +69,7 @@ function Pagamentos({CargoFuncionario=""}) {
             ) : pagamentos.length === 0 ? (
                 <p className="text-gray-400">Nenhum pagamento encontrado</p>
             ) : (
-                <table className="table table-dark table-hover mt-4 max-w-300 ml-auto mr-auto table-fixed overflow-x-scroll text-left w-full">
+                <table className="table table-dark table-hover border overflow-x-auto border-gold/30 rounded mt-4 max-w-240 ml-auto mr-auto table-fixed overflow-x-scroll text-left w-full">
                     <thead>
                         <tr>
                             <th className="w-auto break-words">ID</th>
@@ -88,7 +88,11 @@ function Pagamentos({CargoFuncionario=""}) {
                                 <td>R$ {(pagamento.ValorPago || 0).toFixed(2)}</td>
                                 <td>{pagamento.FormaPagamento || 'Não especificado'}</td>
                                 <td>{new Date(pagamento.HorarioPagamento).toLocaleString('pt-BR')}</td>
-                                <td>
+                                <td className="flex gap-2 flex-wrap justify-center items-center">
+                                    <button onClick={() => {}}
+                                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition font-semibold">
+                                        Editar
+                                    </button>
                                     <button
                                         onClick={() => deletarPagamento(pagamento.ID_pagamento)}
                                         className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition font-semibold"

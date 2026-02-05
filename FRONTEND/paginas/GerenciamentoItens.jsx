@@ -270,7 +270,7 @@ export default function GerenciamentoItens({CargoFuncionario=""}) {
                       <td className="p-4 text-gray-400 text-sm max-w-xs truncate">
                         {item.Ingredientes || "-"}
                       </td>
-                      <td className="p-4 text-center space-x-2">
+                      <td className="px-4 py-2 text-center flex gap-2 flex-wrap justify-center items-center">
                         <button
                           onClick={() => editarItem(item)}
                           className="bg-blue-600 text-white px-3 py-2 rounded text-sm font-bold hover:bg-blue-700 transition"

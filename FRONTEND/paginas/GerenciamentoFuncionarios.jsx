@@ -272,7 +272,7 @@ export default function GerenciamentoFuncionarios({CargoFuncionario=""}) {
                       <td className="p-4 text-white">{func.NomeFuncionario}</td>
                       <td className="p-4 text-gray-300">{func.CargoFuncionario}</td>
                       <td className="p-4 text-gray-300 text-sm truncate">{func.EmailFuncionario || "-"}</td>
-                      <td className="p-4 text-center space-x-2">
+                      <td className="px-4 py-2 text-center flex gap-2 flex-wrap justify-center items-center">
                         <button
                           onClick={() => editarFuncionario(func)}
                           className="bg-blue-600 text-white px-3 py-2 rounded text-sm font-bold hover:bg-blue-700 transition"

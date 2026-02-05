@@ -145,7 +145,7 @@ exports.atualizar = async (req, res) => {
       valores.push(nome);
     }
     if (cargo !== undefined) {
-      campos.push('Cargo = ?');
+      campos.push('CargoFuncionario = ?');
       valores.push(cargo);
     }
     if (email !== undefined) {
