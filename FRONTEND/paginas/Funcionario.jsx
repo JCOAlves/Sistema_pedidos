@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react"
-import { useParams, useNavigate, Navigate, Link } from "react-router-dom"
+import { useParams, Navigate, Link } from "react-router-dom"
 
 
 //Página de usuário do funcionario
 function Funcionario({dadosUsuario}) {
     const [mensagem, setMensagem] = useState("");
-    const [nomeFuncionario, setNome] = useState("Fulano");
-    const [cargoFuncionario, setCargo] = useState("Cozinheiro");
-    const navigate = useNavigate();
+    const [nomeFuncionario, setNome] = useState("");
+    const [cargoFuncionario, setCargo] = useState("");
     const { id_funcionario } = useParams();
     if (id_funcionario === undefined || id_funcionario === null){ return <Navigate to={"/ERRO"}/> }
     if(id_funcionario != dadosUsuario.ID_funcionario){ return <Navigate to={"/NEGADO"}/> }
@@ -18,7 +17,7 @@ function Funcionario({dadosUsuario}) {
             setCargo(dadosUsuario.CargoFuncionario);
         }
         
-    }, [id_funcionario])
+    }, [id_funcionario, dadosUsuario])
 
     return (<>
         {mensagem && (
@@ -35,9 +34,12 @@ function Funcionario({dadosUsuario}) {
                 <div className="flex gap-2 flex-wrap justify-center items-center flex-row w-full">
                     <Link to={"/gerenciamento/itens"} className="p-2 border rounded">Itens</Link>
                     <Link to={"/gerenciamento/pedidos"} className="p-2 border rounded">Pedidos</Link>
-                    <Link to={"/gerenciamento/funcionarios"} className="p-2 border rounded">Funcionarios</Link>
                     <Link to={"/gerenciamento/clientes"} className="p-2 border rounded">Clientes</Link>
-                    <Link to={"/gerenciamento/pagamentos"} className="p-2 border rounded">Pagamentos</Link>
+                    {cargoFuncionario === "Gerente" ? (<>
+                        <Link to={"/gerenciamento/funcionarios"} className="p-2 border rounded">Funcionarios</Link>
+                        <Link to={"/gerenciamento/pagamentos"} className="p-2 border rounded">Pagamentos</Link>
+                    </>) : null}
+                    
                 </div>
             </div>
         </section>

@@ -66,10 +66,10 @@ export default function GerenciamentoClientes() {
 
   function editarCliente(cliente) {
     setEditando(cliente.ID_cliente);
-    setNome(cliente.Nome);
-    setCpf(cliente.CPF);
-    setTelefone(cliente.Telefone);
-    setEmail(cliente.Email);
+    setNome(cliente.NomeCliente);
+    setCpf(cliente.cpf);
+    setTelefone(cliente.NumeroTelefone);
+    setEmail(cliente.EnderecoEmail);
     setMostraFormulario(true);
   }
 
@@ -317,7 +317,7 @@ export default function GerenciamentoClientes() {
                       <td className="p-4 text-gray-300">{cliente.cpf}</td>
                       <td className="p-4 text-gray-300">{cliente.NumeroTelefone || "-"}</td>
                       <td className="p-4 text-gray-300 text-sm truncate">{cliente.EnderecoEmail || "-"}</td>
-                      <td className="p-4 text-center space-x-2">
+                      <td className="px-4 py-2 text-center flex gap-2 flex-wrap justify-center items-center">
                         <button
                           onClick={() => editarCliente(cliente)}
                           className="bg-blue-600 text-white px-3 py-2 rounded text-sm font-bold hover:bg-blue-700 transition"

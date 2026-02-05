@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { GET } from "../MetodosHTTP.js";
-import Logout from "../componentes/Logout.jsx";
+import { GET, PUT, DELETE } from "../MetodosHTTP.js";
 
 export default function Pedidos() {
   const [pedidos, setPedidos] = useState([]);
@@ -8,6 +7,7 @@ export default function Pedidos() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
   const [filtroStatus, setFiltroStatus] = useState("todos");
+  const [exibiForm, setExibe] = useState(false);
 
   // Carregar pedidos ao montar componente
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Pedidos() {
     try {
       setCarregando(true);
       const dados = await GET('/pedidos');
-      
+
       if (dados.success && Array.isArray(dados.data)) {
         setPedidos(dados.data);
         setErro("");
@@ -39,7 +39,7 @@ export default function Pedidos() {
   async function abrirPedido(id) {
     try {
       const dados = await GET(`/pedidos/${id}`);
-      
+
       if (dados.success) {
         setPedidoSelecionado(dados.data);
       } else {
@@ -62,6 +62,18 @@ export default function Pedidos() {
     return data.toLocaleString("pt-BR");
   };
 
+  //Deleta pedido
+  async function DeletaItem(ID){
+    try{
+      const resposta = await DELETE(`/pedidos/${ID}`);
+
+    } catch (error){
+      console.log("")
+    }
+  }
+
+
+
   return (<>
     <div className="p-6 max-w-6xl mr-auto ml-auto mb-0 mt-23">
       <h1 className="text-3xl font-bold text-white mb-6">Meus Pedidos</h1>
@@ -78,11 +90,10 @@ export default function Pedidos() {
               <button
                 key={status}
                 onClick={() => setFiltroStatus(status)}
-                className={`px-4 py-2 rounded font-semibold transition ${
-                  filtroStatus === status
-                    ? "bg-gold text-black"
-                    : "bg-dark text-gold border border-gold hover:bg-gold hover:text-black"
-                }`}
+                className={`px-4 py-2 rounded font-semibold transition ${filtroStatus === status
+                  ? "bg-gold text-black"
+                  : "bg-dark text-gold border border-gold hover:bg-gold hover:text-black"
+                  }`}
               >
                 {status === "todos" ? "Todos" : status}
               </button>
@@ -108,12 +119,11 @@ export default function Pedidos() {
                 >
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="text-gold font-bold text-lg">Pedido #{pedido.ID_pedido}</h3>
-                    <span className={`text-xs font-semibold px-3 py-1 rounded ${
-                      pedido.StatusPedido === "Em preparo" ? "bg-yellow-600" :
+                    <span className={`text-xs font-semibold px-3 py-1 rounded ${pedido.StatusPedido === "Em preparo" ? "bg-yellow-600" :
                       pedido.StatusPedido === "Entregue" ? "bg-green-600" :
-                      pedido.StatusPedido === "Pago" ? "bg-blue-600" :
-                      "bg-red-600"
-                    }`}>
+                        pedido.StatusPedido === "Pago" ? "bg-blue-600" :
+                          "bg-red-600"
+                      }`}>
                       {pedido.StatusPedido}
                     </span>
                   </div>
@@ -150,14 +160,21 @@ export default function Pedidos() {
                 <h2 className="text-3xl font-bold text-gold mb-2">Pedido #{pedidoSelecionado.ID_pedido}</h2>
                 <p className="text-gray-400">{formatarData(pedidoSelecionado.HorarioPedido)}</p>
               </div>
-              <span className={`text-sm font-semibold px-4 py-2 rounded ${
-                pedidoSelecionado.StatusPedido === "Em preparo" ? "bg-yellow-600" :
-                pedidoSelecionado.StatusPedido === "Entregue" ? "bg-green-600" :
-                pedidoSelecionado.StatusPedido === "Pago" ? "bg-blue-600" :
-                "bg-red-600"
-              }`}>
-                {pedidoSelecionado.StatusPedido}
-              </span>
+              <div className="flex gap-4">
+                <span className={`text-sm font-semibold px-4 py-2 rounded ${pedidoSelecionado.StatusPedido === "Em preparo" ? "bg-yellow-600" :
+                  pedidoSelecionado.StatusPedido === "Entregue" ? "bg-green-600" :
+                    pedidoSelecionado.StatusPedido === "Pago" ? "bg-blue-600" :
+                      "bg-red-600"
+                  }`}>
+                  {pedidoSelecionado.StatusPedido}
+                </span>
+                <div className="flex gap-2 p-1">
+                  <button onClick={() => {}}
+                    className="bg-blue-600 text-white px-3 py-2 rounded text-sm font-bold hover:bg-blue-700 transition">Editar</button>
+                  <button onClick={() => {}}
+                    className="bg-red-600 text-white px-3 py-2 rounded text-sm font-bold hover:bg-red-700 transition">Deletar</button>
+                </div>
+              </div>
             </div>
 
             {/* Informações do Pedido */}

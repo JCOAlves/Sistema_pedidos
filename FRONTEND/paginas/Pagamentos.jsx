@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react"
-import { GET, DELETE } from "../MetodosHTTP.js";
+import { GET, DELETE, PUT } from "../MetodosHTTP.js";
+import { Navigate } from "react-router-dom"
 
 //Página para a visualização dos pagamentos dos pedidos
-function Pagamentos() {
+function Pagamentos({ CargoFuncionario = "" }) {
     const [mensagem, setMensagem] = useState("");
     const [pagamentos, setPagamentos] = useState([]);
     const [carregando, setCarregando] = useState(true);
+    const [exibiForm, setExibi] = useState(false);
+    const [valorPagoID, setValor] = useState("");
+    const [EspecificoID, setID] = useState("");
+    const [formaPagamentoID, setPagamento] = useState("");
+
+    if (CargoFuncionario != "Gerente") { return <Navigate to={"/NEGADO"} /> }
 
     useEffect(() => {
         carregarPagamentos();
@@ -35,6 +42,43 @@ function Pagamentos() {
         }
     }
 
+    function abrirForm(ID, formaPagamento, valorPago) {
+        setID(ID);
+        setPagamento(formaPagamento);
+        setValor(valorPago);
+        const listaPagamento = document.querySelectorAll("option");
+        listaPagamento.forEach(pag => {
+            if (pag.value === formaPagamentoID) {
+                pag.selected = true;
+            }
+        })
+        setExibi(true);
+    }
+
+    function fecharForm() {
+        setExibi(false);
+        setID("");
+        setPagamento("");
+        setValor("");
+    }
+
+    async function atualizarPagamento(ID) {
+        try {
+            const dadosNovos = { ID_pagamento: ID, valorPedido: valorPagoID, formaPagamento: formaPagamentoID }
+            const resposta = await PUT(`/pagamentos/${ID}`, dadosNovos);
+            const { success, message } = resposta;
+            if (success) {
+                setMensagem(message);
+            } else {
+                setMensagem("Erro na atualização de dados de pagamento");
+            }
+
+        } catch (error) {
+            setMensagem(`Erro na atualização de pagamento: ${error || error.message}`);
+            console.error(`Erro na atualização de pagamento: ${error || error.message}`);
+        }
+    }
+
     async function deletarPagamento(id) {
         if (window.confirm("Deseja deletar este pagamento?")) {
             try {
@@ -59,6 +103,39 @@ function Pagamentos() {
                 {mensagem}
             </div>
         )}
+
+        {exibiForm ? (<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-dark border border-gold p-8 rounded max-w-md w-full max-h-screen overflow-y-auto">
+                <h2 className="text-2xl font-bold text-gold mb-6">Editar pagamento</h2>
+                <form className="space-y-4" onSubmit={() => {atualizarPagamento(EspecificoID)}}>
+                    <div>
+                        <label htmlFor="valorPago">Valor do Pedido</label>
+                        <input type="number" name="valorPago" id="valorPago" onInput={(e) => { setValor(e.target.value) }}
+                            value={valorPagoID} placeholder="Valor total do pedido"
+                            className="" />
+                    </div>
+                    <div>
+                        <label htmlFor="formaPagamento">Forma pagamento</label>
+                        <select name="formaPagamento" id="formaPagamento" onChange={(e) => { setPagamento(e.target.value) }}
+                            className="">
+                            <option value="" disabled>Forma de pagamento</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Debito">Cartão de Debito</option>
+                            <option value="Credito">Cartão de Crédito</option>
+                            <option value="Dinheiro">Dinheiro em espécie</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="ID_pagamento" value={EspecificoID} />
+                    <div className="">
+                        <button className="" 
+                            type="submit">Atualizar</button>
+                        <button className=""
+                            onClick={() => { fecharForm() }}>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>) : null}
+
         <div className="mt-30 mb-30 text-center">
             <h1 className="text-3xl font-bold text-white mb-4">Pagamentos</h1>
             {carregando ? (
@@ -66,7 +143,7 @@ function Pagamentos() {
             ) : pagamentos.length === 0 ? (
                 <p className="text-gray-400">Nenhum pagamento encontrado</p>
             ) : (
-                <table className="table table-dark table-hover mt-4 max-w-300 ml-auto mr-auto table-fixed overflow-x-scroll text-left w-full">
+                <table className="table table-dark table-hover border overflow-x-auto border-gold/30 rounded mt-4 max-w-240 ml-auto mr-auto table-fixed overflow-x-scroll text-left w-full">
                     <thead>
                         <tr>
                             <th className="w-auto break-words">ID</th>
@@ -85,11 +162,14 @@ function Pagamentos() {
                                 <td>R$ {(pagamento.ValorPago || 0).toFixed(2)}</td>
                                 <td>{pagamento.FormaPagamento || 'Não especificado'}</td>
                                 <td>{new Date(pagamento.HorarioPagamento).toLocaleString('pt-BR')}</td>
-                                <td>
+                                <td className="flex gap-2 flex-wrap justify-center items-center">
+                                    <button onClick={() => { abrirForm(pagamento.ID_pagamento, pagamento.ValorPago || 0, pagamento.FormaPagamento) }}
+                                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition font-semibold">
+                                        Editar
+                                    </button>
                                     <button
                                         onClick={() => deletarPagamento(pagamento.ID_pagamento)}
-                                        className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition font-semibold"
-                                    >
+                                        className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition font-semibold">
                                         Deletar
                                     </button>
                                 </td>

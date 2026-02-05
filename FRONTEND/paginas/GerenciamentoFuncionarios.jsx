@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom"
 import { GET, POST, PUT, DELETE } from "../MetodosHTTP.js";
 
-export default function GerenciamentoFuncionarios() {
+export default function GerenciamentoFuncionarios({CargoFuncionario=""}) {
   const [funcionarios, setFuncionarios] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [mensagem, setMensagem] = useState("");
@@ -15,6 +16,8 @@ export default function GerenciamentoFuncionarios() {
   const [email, setEmail] = useState("");
   const [senhaSistema, setSenha] = useState("");
   const [ID_restaurante, setRestaurante] = useState(0);
+
+  if(CargoFuncionario != "Gerente"){ return <Navigate to={"/NEGADO"}/> }
 
   // Carregar funcionários ao montar componente
   useEffect(() => {
@@ -269,7 +272,7 @@ export default function GerenciamentoFuncionarios() {
                       <td className="p-4 text-white">{func.NomeFuncionario}</td>
                       <td className="p-4 text-gray-300">{func.CargoFuncionario}</td>
                       <td className="p-4 text-gray-300 text-sm truncate">{func.EmailFuncionario || "-"}</td>
-                      <td className="p-4 text-center space-x-2">
+                      <td className="px-4 py-2 text-center flex gap-2 flex-wrap justify-center items-center">
                         <button
                           onClick={() => editarFuncionario(func)}
                           className="bg-blue-600 text-white px-3 py-2 rounded text-sm font-bold hover:bg-blue-700 transition"
