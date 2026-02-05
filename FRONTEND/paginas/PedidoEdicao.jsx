@@ -1,15 +1,16 @@
 import {useState, useEffect} from "react"
-import {useSearchParams, Navigate} from "react-router-dom"
+import {useParams, Navigate} from "react-router-dom"
 import {GET, PUT} from "../MetodosHTTP.js"
 
 //Página de edição de pedido
-function PedidoEdicao(){
+function PedidoEdicao({CargoFuncionario=""}){
     const [listaItens, setItens] = useState([]);
     const [carregando, setCarregando] = useState(false);
     const [mensagem, setMensagem] = useState("");
     
-    const {id} = useSearchParams();
-    //if (id === undefined){ return <Navigate to={"/ERRO"}/> }
+    const {id} = useParams();
+    if (id === undefined){ return <Navigate to={"/ERRO"}/> }
+    if(CargoFuncionario != "Gerente"){ return <Navigate to={"/NEGADO"}/> }
 
     useEffect(() => {
         async () => {

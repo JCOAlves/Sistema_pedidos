@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
 import { GET, DELETE } from "../MetodosHTTP.js";
+import { Navigate } from "react-router-dom"
 
 //Página para a visualização dos pagamentos dos pedidos
-function Pagamentos() {
+function Pagamentos({CargoFuncionario=""}) {
     const [mensagem, setMensagem] = useState("");
     const [pagamentos, setPagamentos] = useState([]);
     const [carregando, setCarregando] = useState(true);
+
+    if(CargoFuncionario != "Gerente"){ return <Navigate to={"/NEGADO"}/> }
 
     useEffect(() => {
         carregarPagamentos();

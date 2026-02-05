@@ -284,7 +284,6 @@ exports.checkLogin = async (req, res) => {
         'SELECT * FROM funcionarios WHERE ID_funcionario = ?', 
         [req.session.ID_funcionario]
       )
-      console.log(dados)
 
       return res.status(200).json({
         success: true,

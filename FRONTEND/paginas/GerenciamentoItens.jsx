@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { GET, POST, PUT, DELETE } from "../MetodosHTTP.js";
-import Logout from "../componentes/Logout.jsx";
+import { Navigate } from "react-router-dom"
 
-export default function GerenciamentoItens() {
+export default function GerenciamentoItens({CargoFuncionario=""}) {
   const [itens, setItens] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [mensagem, setMensagem] = useState("");
   const [tipoMensagem, setTipoMensagem] = useState("");
   const [mostraFormulario, setMostraFormulario] = useState(false);
   const [editando, setEditando] = useState(null);
+
+  if(CargoFuncionario != "Gerente"){ return <Navigate to={"/NEGADO"}/> }
 
   // Form states
   const [nomeItem, setNomeItem] = useState("");

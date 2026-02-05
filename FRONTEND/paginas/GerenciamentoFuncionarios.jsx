@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom"
 import { GET, POST, PUT, DELETE } from "../MetodosHTTP.js";
 
-export default function GerenciamentoFuncionarios() {
+export default function GerenciamentoFuncionarios({CargoFuncionario=""}) {
   const [funcionarios, setFuncionarios] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [mensagem, setMensagem] = useState("");
@@ -15,6 +16,8 @@ export default function GerenciamentoFuncionarios() {
   const [email, setEmail] = useState("");
   const [senhaSistema, setSenha] = useState("");
   const [ID_restaurante, setRestaurante] = useState(0);
+
+  if(CargoFuncionario != "Gerente"){ return <Navigate to={"/NEGADO"}/> }
 
   // Carregar funcionários ao montar componente
   useEffect(() => {
