@@ -16,6 +16,8 @@ Além dos frameworks já citados, o projeto utiliza outras ferramentas como:
   - Tailwind CSS
   - API Fetch
 
+> Utilize o comando `npm install` nas pastas *FRONTEND* e *BACKEND* para instalar as dependências.
+
 ## Banco de dados *SQL*
 O projeto utiliza um banco de dados MySQL físico para armazenar tabelas com dados da aplicação.
 

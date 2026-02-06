@@ -9,8 +9,8 @@ import Login from "./paginas/Login.jsx"
 import ERRO from "./paginas/ERRO.jsx"
 import PedidoEdicao from "./paginas/PedidoEdicao.jsx"
 import Funcionario from "./paginas/Funcionario.jsx"
-import GerenciamentoItens from './paginas/GerenciamentoItens.jsx';
-import GerenciamentoClientes from './paginas/GerenciamentoClientes.jsx';
+import GerenciamentoItens from './paginas/GerenciamentoItens.jsx'
+import GerenciamentoClientes from './paginas/GerenciamentoClientes.jsx'
 import GerenciamentoFuncionarios from './paginas/GerenciamentoFuncionarios.jsx';
 import Pagamentos from "./paginas/Pagamentos.jsx"
 import Footer from "./componentes/Footer.jsx"
@@ -98,7 +98,6 @@ function App() {
                 setCarregando(false);
             }
         }
-
         
         BuscarSessao();
         
