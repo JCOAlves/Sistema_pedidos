@@ -64,15 +64,17 @@ function Pagamentos({ CargoFuncionario = "" }) {
 
     async function atualizarPagamento(ID) {
         try {
-            const dadosNovos = { ID_pagamento: ID, valorPedido: valorPagoID, formaPagamento: formaPagamentoID }
-            const resposta = await PUT(`/pagamentos/${ID}`, dadosNovos);
-            const { success, message } = resposta;
-            if (success) {
-                setMensagem(message);
-            } else {
-                setMensagem("Erro na atualização de dados de pagamento");
-            }
-
+            if(valorPagoID != "" && formaPagamentoID != ""){
+                const dadosNovos = { ID_pagamento: ID, valorPedido: valorPagoID, formaPagamento: formaPagamentoID }
+                const resposta = await PUT(`/pagamentos/${ID}`, dadosNovos);
+                const { success, message } = resposta;
+                if (success) {
+                    setMensagem(message);
+                } else {
+                    setMensagem("Erro na atualização de dados de pagamento");
+                }
+            } 
+            
         } catch (error) {
             setMensagem(`Erro na atualização de pagamento: ${error || error.message}`);
             console.error(`Erro na atualização de pagamento: ${error || error.message}`);
@@ -107,17 +109,17 @@ function Pagamentos({ CargoFuncionario = "" }) {
         {exibiForm ? (<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <div className="bg-dark border border-gold p-8 rounded max-w-md w-full max-h-screen overflow-y-auto">
                 <h2 className="text-2xl font-bold text-gold mb-6">Editar pagamento</h2>
-                <form className="space-y-4" onSubmit={() => {atualizarPagamento(EspecificoID)}}>
+                <form className="space-y-8" onSubmit={() => {atualizarPagamento(EspecificoID)}}>
                     <div>
-                        <label htmlFor="valorPago">Valor do Pedido</label>
+                        <label htmlFor="valorPago" className="block text-gold mb-2 font-bold">Valor do Pedido</label>
                         <input type="number" name="valorPago" id="valorPago" onInput={(e) => { setValor(e.target.value) }}
                             value={valorPagoID} placeholder="Valor total do pedido"
-                            className="" />
+                            className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400" />
                     </div>
                     <div>
-                        <label htmlFor="formaPagamento">Forma pagamento</label>
+                        <label htmlFor="formaPagamento" className="block text-gold mb-2 font-bold">Forma pagamento</label>
                         <select name="formaPagamento" id="formaPagamento" onChange={(e) => { setPagamento(e.target.value) }}
-                            className="">
+                            className="w-full bg-darker border border-gold text-white p-3 rounded focus:outline-none focus:border-yellow-400">
                             <option value="" disabled>Forma de pagamento</option>
                             <option value="Pix">Pix</option>
                             <option value="Debito">Cartão de Debito</option>
@@ -126,10 +128,10 @@ function Pagamentos({ CargoFuncionario = "" }) {
                         </select>
                     </div>
                     <input type="hidden" name="ID_pagamento" value={EspecificoID} />
-                    <div className="">
-                        <button className="" 
+                    <div className="flex justify-between w-full gap-4 mt-10">
+                        <button className="flex-1 bg-gold text-dark py-3 px-4 rounded font-bold hover:bg-yellow-400 transition" 
                             type="submit">Atualizar</button>
-                        <button className=""
+                        <button className="flex-1 bg-darker border border-gold text-gold py-3 px-4 rounded font-bold hover:bg-dark transition"
                             onClick={() => { fecharForm() }}>Cancelar</button>
                     </div>
                 </form>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { GET, POST, PUT, DELETE } from "../MetodosHTTP.js";
-import Logout from "../componentes/Logout.jsx"
+
 
 export default function GerenciamentoClientes() {
   const [clientes, setClientes] = useState([]);
