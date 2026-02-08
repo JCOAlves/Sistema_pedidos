@@ -6,7 +6,7 @@ router.get('/', pagamentosController.listar);
 
 router.post('/', pagamentosController.criar);
 
-router.put('/', pagamentosController.atualizar);
+router.put('/:id', pagamentosController.atualizar);
  
 router.delete('/:id', pagamentosController.deletar);
 

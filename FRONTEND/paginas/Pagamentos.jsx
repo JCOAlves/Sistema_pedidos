@@ -8,7 +8,7 @@ function Pagamentos({ CargoFuncionario = "" }) {
     const [pagamentos, setPagamentos] = useState([]);
     const [carregando, setCarregando] = useState(true);
     const [exibiForm, setExibi] = useState(false);
-    const [valorPagoID, setValor] = useState("");
+    const [valorPagoID, setValor] = useState(0);
     const [EspecificoID, setID] = useState("");
     const [formaPagamentoID, setPagamento] = useState("");
 
@@ -62,16 +62,18 @@ function Pagamentos({ CargoFuncionario = "" }) {
         setValor("");
     }
 
-    async function atualizarPagamento(ID) {
+    async function atualizarPagamento(e) {
+        e.preventDefault()
         try {
             if(valorPagoID != "" && formaPagamentoID != ""){
-                const dadosNovos = { ID_pagamento: ID, valorPedido: valorPagoID, formaPagamento: formaPagamentoID }
-                const resposta = await PUT(`/pagamentos/${ID}`, dadosNovos);
+                const dadosNovos = { valorPago: valorPagoID, formaPagamento: formaPagamentoID }
+                const resposta = await PUT(`/pagamentos/${EspecificoID}`, dadosNovos);
                 const { success, message } = resposta;
                 if (success) {
                     setMensagem(message);
                 } else {
                     setMensagem("Erro na atualização de dados de pagamento");
+                    console.log(resposta);
                 }
             } 
             
@@ -109,7 +111,7 @@ function Pagamentos({ CargoFuncionario = "" }) {
         {exibiForm ? (<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <div className="bg-dark border border-gold p-8 rounded max-w-md w-full max-h-screen overflow-y-auto">
                 <h2 className="text-2xl font-bold text-gold mb-6">Editar pagamento</h2>
-                <form className="space-y-8" onSubmit={() => {atualizarPagamento(EspecificoID)}}>
+                <form className="space-y-8" onSubmit={(e) => {atualizarPagamento(e)}}>
                     <div>
                         <label htmlFor="valorPago" className="block text-gold mb-2 font-bold">Valor do Pedido</label>
                         <input type="number" name="valorPago" id="valorPago" onInput={(e) => { setValor(e.target.value) }}
@@ -165,7 +167,7 @@ function Pagamentos({ CargoFuncionario = "" }) {
                                 <td>{pagamento.FormaPagamento || 'Não especificado'}</td>
                                 <td>{new Date(pagamento.HorarioPagamento).toLocaleString('pt-BR')}</td>
                                 <td className="flex gap-2 flex-wrap justify-center items-center">
-                                    <button onClick={() => { abrirForm(pagamento.ID_pagamento, pagamento.ValorPago || 0, pagamento.FormaPagamento) }}
+                                    <button onClick={() => { abrirForm(pagamento.ID_pagamento, pagamento.FormaPagamento, pagamento.ValorPago || 0) }}
                                         className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition font-semibold">
                                         Editar
                                     </button>
